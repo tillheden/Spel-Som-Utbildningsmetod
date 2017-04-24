@@ -2,7 +2,7 @@ var drawTryggCListener;
 
 function loadTryggC() {
     drawEscapeListener = createjs.Ticker.on("tick", drawTryggC);
-    var tryggcBg = new createjs.Bitmap("bitmaps/tyggcbg.png");
+    var tryggcBg = new createjs.Bitmap("bitmaps/tryggcbg.png");
     // PicWidth * Scale = CanvasWidth => Scale = CanvasWidth / PicWidth
     tryggcBg.scaleX = stage.canvas.width / 960;
     bg1.scaleY = bg2.scaleY = stage.canvas.height / 610;

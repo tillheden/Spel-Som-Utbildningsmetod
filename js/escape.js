@@ -93,6 +93,7 @@ function checkCollision   (event) {
 function checkWin() {
     if (rogue.x + rogue.getBounds().width * 2 > stage.canvas.width - 100) {
         endEscape();
+        createjs.Ticker.off("tick", winListener);
     }
 }
 
