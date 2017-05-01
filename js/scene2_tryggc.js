@@ -1,11 +1,11 @@
 var drawTryggCListener;
 
 function loadTryggC() {
-    drawEscapeListener = createjs.Ticker.on("tick", drawTryggC);
+    drawTryggCListener = createjs.Ticker.on("tick", drawTryggC);
     var tryggcBg = new createjs.Bitmap("bitmaps/tryggcbg.png");
     // PicWidth * Scale = CanvasWidth => Scale = CanvasWidth / PicWidth
     tryggcBg.scaleX = stage.canvas.width / 960;
-    bg1.scaleY = bg2.scaleY = stage.canvas.height / 610;
+    tryggcBg.scaleY = stage.canvas.height / 610;
     stage.addChild(tryggcBg);
 
     var avtal = new createjs.Bitmap("bitmaps/avtal.png");
@@ -19,6 +19,16 @@ function loadTryggC() {
     dator.y = 5;
     dator.on("click", displaySkadeDB);
     stage.addChild(dator);
+
+    var rast = new createjs.Bitmap("bitmaps/rast.png");
+    rast.x = 50;
+    rast.y = 400;
+    stage.addChild(rast);
+    rast.on("click", ringBevakningsbolag);
+
+    stage.addChild(scoreText);
+    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
+    /*endTryggC();*/
 }
 
 function drawTryggC() {
@@ -26,16 +36,21 @@ function drawTryggC() {
 }
 
 function endTryggC(event) {
-    createjs.Ticker.off("tick", drawGraffitiListener);
+    createjs.Ticker.off("tick", drawTryggC);
     stage.removeAllChildren();
     // TODO: play cutscene
+    loadSanera();
 }
 
-function displayAvtal() {
-  alert("AVTAL");
+function displayAvtal(event) {
+    addScore(event, 250);
+    alert("AVTAL");
 }
 
+function displaySkadeDB(event) {
+    alert("SkadeDB är tom just nu");
+}
 
-function displaySkadeDB() {
-  alert("SKADEDB");
+function ringBevakningsbolag(event) {
+    endTryggC();
 }

@@ -43,9 +43,13 @@ function loadGraffiti() {
     stage.addChild(middlefinger);
 
     graffitiText = new createjs.Text("Click to spray graffiti", "25px Arial", "#DDD");
+    console.log(graffitiText.getMeasuredWidth() / 2);
     graffitiText.x = (stage.canvas.width / 2) - (graffitiText.getMeasuredWidth() / 2);
     graffitiText.y = 15;
+    graffitiText.shadow = new createjs.Shadow("#000", 2, 2, 10);
     stage.addChild(graffitiText);
+
+    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
     /*endGraffiti();*/
 }
 
@@ -58,13 +62,15 @@ function endGraffiti(event) {
     stage.removeAllChildren();
     stage.update();
     // TODO: play cutscene
-    loadEscape();
+    /*loadTryggC();*/
+    rast();
 }
 
 function changeMiddlefinger(event) {
     var spraypaintsound = new Audio("sounds/spraypaint.mp3");
-    spraypaintsound.play();
+    /*spraypaintsound.play();*/
     middlefinger.alpha += 0.2;
+    addScore(event, 100);
     if (middlefinger.alpha == 1) {
         middlefinger.off("click", middlefingerListener);
         graffitiText.text = "CONTINUE"

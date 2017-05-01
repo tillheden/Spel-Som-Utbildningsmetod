@@ -34,13 +34,13 @@ function loadEscape() {
     var guardSheet = new createjs.SpriteSheet({
         animations: {
             guard_run: {
-                frames: [0,1,2,3],
+                frames: [0, 1, 2, 3],
                 speed: 0.4
             }
         },
         images: ["bitmaps/WonderMomo.png"],
         frames: {
-            width: 104/4,
+            width: 104 / 4,
             height: 60
         }
     });
@@ -53,7 +53,9 @@ function loadEscape() {
 
     collisionListener = createjs.Ticker.on("tick", checkCollision);
     winListener = createjs.Ticker.on("tick", checkWin);
-    createjs.Ticker.framerate = 13;
+
+    stage.addChild(scoreText);
+    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
     /*endEscape();*/
 }
 
@@ -76,7 +78,7 @@ function drawEscape() {
     stage.update();
 }
 
-function checkCollision   (event) {
+function checkCollision(event) {
     var collisionPoint = rogue.localToLocal(0, 0, guard);
     if (guard.hitTest(collisionPoint.x, collisionPoint.y)) {
         stage.removeChild(rogue);
@@ -90,8 +92,9 @@ function checkCollision   (event) {
     }
 }
 
-function checkWin() {
+function checkWin(event) {
     if (rogue.x + rogue.getBounds().width * 2 > stage.canvas.width - 100) {
+        addScore(event, Math.floor((rogue.x - guard.x) * 0.25));
         endEscape();
         createjs.Ticker.off("tick", winListener);
     }
