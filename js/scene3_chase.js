@@ -8,6 +8,7 @@ function loadChase() {
     stage.addChild(bg1);
     stage.addChild(bg2);
     stage.addChild(klotter);
+    stage.addChild(sprayburk);
 
     stage.addChild(textTooltip);
     textTooltip.text = "Ta fast klottraren!";
@@ -87,6 +88,7 @@ function updateChase() {
 
   bg1.x -= csg.speed * 2;
   klotter.x -= csg.speed * 2;
+  sprayburk.x -= csg.speed * 2;
   bg2.x -= csg.speed * 2;
   csg.x += csg.speed;
   vandal.x += 6;

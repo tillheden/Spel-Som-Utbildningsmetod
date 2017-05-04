@@ -2,10 +2,11 @@ var dok
 function loadCSG(msg) {
   updateListener = createjs.Ticker.on("tick", updateCSG);
   stage.addChild(station);
-  stage.addChild(sprayburk);
   stage.addChild(klotter);
+  stage.addChild(sprayburk);
   klotter.x = klotter.originalX;
   klotter.y = klotter.originalY;
+  sprayburk.x = klotter.x
 
   stage.addChild(csg);
   csg.gotoAndPlay("csg_idle");
