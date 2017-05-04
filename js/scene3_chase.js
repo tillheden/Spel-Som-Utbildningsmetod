@@ -1,108 +1,90 @@
-var drawEscapeListener;
-var bg1;
-var bg2;
-var rogueSpeed;
-var guard;
-var collisionListener;
-var guardBounds;
-var guardHitbox;
+var bg1, bg2, csg, collisionListener, vandalRymtListener
 
-function loadEscape() {
-    console.log("loadEscape");
-    drawEscapeListener = createjs.Ticker.on("tick", drawEscape);
-    bg1 = new createjs.Bitmap("bitmaps/subway.jpg");
-    bg2 = bg1.clone();
-    // PicWidth * Scale = CanvasWidth => Scale = CanvasWidth / PicWidth
-    bg1.scaleX = bg2.scaleX = stage.canvas.width / 1186;
-    bg1.scaleY = bg2.scaleY = stage.canvas.height / 512;
+function loadChase() {
+    updateListener = createjs.Ticker.on("tick", updateChase);
+    bg1 = station.clone();
+    bg2 = new createjs.Bitmap("bitmaps/stationbg.png");
+    bg2.x = stage.canvas.width;
+    bg1.on("click", jaga);
+    bg2.on("click", jaga);
     stage.addChild(bg1);
     stage.addChild(bg2);
-    bg2.x = 1186 * bg2.scaleX;
+    stage.addChild(klotter);
 
-    escapeText = new createjs.Text("Fly från vakten!", "25px Arial", "#DDD");
-    escapeText.x = (stage.canvas.width / 2) - (graffitiText.getMeasuredWidth() / 2);
-    escapeText.y = 15;
-    stage.addChild(escapeText);
+    stage.addChild(textTooltip);
+    textTooltip.text = "Ta fast klottraren!";
 
-    stage.addChild(rogue);
-    rogue.gotoAndPlay("rogue_run");
-    rogue.on("click", escape);
-    rogue.y = 360;
-    rogue.x = 200;
-    rogueSpeed = 0;
+    stage.addChild(vandal);
+    vandal.gotoAndPlay("vandal_run");
 
-    var guardSheet = new createjs.SpriteSheet({
+    var csgSheet = new createjs.SpriteSheet({
         animations: {
-            guard_run: {
-                frames: [0, 1, 2, 3],
-                speed: 0.4
-            }
+            csg_idle: {
+                frames: [8]
+            },
+            csg_run: {
+                frames: [0, 1, 2, 3, 4, 5, 6, 7],
+                speed: 0.25
+            },
         },
-        images: ["bitmaps/WonderMomo.png"],
+        images: ["bitmaps/runningcsg.png"],
         frames: {
-            width: 104 / 4,
-            height: 60
+            width: 200,
+            height: 300
         }
     });
-    guard = new createjs.Sprite(guardSheet);
-    guard.gotoAndPlay("guard_run");
-    guard.x = -100;
-    guard.y = 360;
-    guard.scaleX = guard.scaleY = 4;
-    stage.addChild(guard);
-
-    collisionListener = createjs.Ticker.on("tick", checkCollision);
-    winListener = createjs.Ticker.on("tick", checkWin);
+    csg = new createjs.Sprite(csgSheet);
+    csg.scalex = 1.4;
+    csg.scaleY = 1.6;
+    csg.gotoAndPlay("csg_idle");
+    csg.x = 0;
+    csg.y = vandal.y-50;
+    csg.on("click", jaga);
+    csg.speed = 0;
+    stage.addChild(csg);
 
     stage.addChild(scoreText);
     stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
-    /*endEscape();*/
 }
 
-
-function escape(event) {
-    rogueSpeed += 2;
+function jaga(event) {
+    if (csg.currentAnimation === "csg_idle") csg.gotoAndPlay("csg_run");
+    /*csg.speed += 3.4;*/
+    csg.speed += 30.4;
 }
 
-function drawEscape() {
-    if (rogueSpeed > 0) {
-        rogueSpeed -= 0.5;
-    }
-    rogue.x += rogueSpeed;
-    bg1.x -= rogueSpeed * 2;
-    bg2.x -= rogueSpeed * 2;
-    if (bg1.x < -1186 * bg1.scaleX) bg1.x = 1186 * bg1.scaleX - rogueSpeed * 2;
-    if (bg2.x < -1186 * bg2.scaleX) bg2.x = 1186 * bg2.scaleX - rogueSpeed * 2;
-    guard.x += 4;
+var c = 0;
+function updateChase() {
+  stage.update();
+  c += 1;
+  if (vandal.x - csg.x < 75) {
+    score += Math.floor(100000/c);
+    scoreText.text = score;
+    endChase("CSG tog fast klottraren.\nBra jobbat!");
+  }
+  else if (vandal.x - csg.x > 2250)
+    endChase("Klottraren kom undan!");
 
-    stage.update();
+  if (csg.x > 1300) {
+    csg.x = -50;
+    vandal.x = stage.canvas.width / 2 - 150;
+  }
+  if (csg.speed >= 0.2) { csg.speed -= 0.2; }
+  else csg.gotoAndPlay("csg_idle");
+
+  if (bg1.x < -stage.canvas.width) bg1.x = bg2.x+stage.canvas.width;
+  if (bg2.x < -stage.canvas.width) bg2.x = bg1.x+stage.canvas.width;
+
+  bg1.x -= csg.speed * 2;
+  klotter.x -= csg.speed * 2;
+  bg2.x -= csg.speed * 2;
+  csg.x += csg.speed;
+  vandal.x += 6;
 }
 
-function checkCollision(event) {
-    var collisionPoint = rogue.localToLocal(0, 0, guard);
-    if (guard.hitTest(collisionPoint.x, collisionPoint.y)) {
-        stage.removeChild(rogue);
-        stage.removeChild(guard);
-        escapeText.text = "DEAD..."
-        escapeText.font = "bold 200px Arial";
-        escapeText.color = "red";
-        escapeText.y += 200;
-        escapeText.x = (stage.canvas.width / 2) - (graffitiText.getMeasuredWidth()) - 50;
-        createjs.Ticker.off("tick", collisionListener);
-    }
-}
-
-function checkWin(event) {
-    if (rogue.x + rogue.getBounds().width * 2 > stage.canvas.width - 100) {
-        addScore(event, Math.floor((rogue.x - guard.x) * 0.25));
-        endEscape();
-        createjs.Ticker.off("tick", winListener);
-    }
-}
-
-function endEscape(event) {
-    createjs.Ticker.off("tick", drawEscapeListener);
+function endChase(msg) {
+    createjs.Ticker.off("tick", updateListener);
+    csg.removeAllEventListeners();
     stage.removeAllChildren();
-    // TODO: play cutscene
-    loadTryggC();
+    loadCSG(msg);
 }

@@ -1,21 +1,26 @@
-var drawRastListener;
+var updateRastListener;
 
-function rast() {
-  console.log("rast");
-  drawRastListener = createjs.Ticker.on("tick", drawRast);
-  var rastBg = new createjs.Bitmap("bitmaps/rastbg.png");
-  // PicWidth * Scale = CanvasWidth => Scale = CanvasWidth / PicWidth
-  rastBg.scaleX = stage.canvas.width / 428;
-  rastBg.scaleY = stage.canvas.height / 283;
-  stage.addChild(rastBg);
+function loadRast() {
+  updateListener = createjs.Ticker.on("tick", updateRast);
   var t = "Du samlade totalt ihop " + score + " poäng!";
   var rastText = new createjs.Text(t, "40px Arial", "#FFF");
   rastText.x = (stage.canvas.width/2) - (rastText.getMeasuredWidth()/2);
-  rastText.y = 470;
+  rastText.y = 270;
   rastText.shadow = new createjs.Shadow("#000", 2, 2, 10);
   stage.addChild(rastText);
+
+  var kaffemug = new createjs.Bitmap("bitmaps/coffee.png");
+  kaffemug.x = stage.canvas.width/2-50;
+  kaffemug.y = 350;
+  stage.addChild(kaffemug);
+  kaffemug.on("click", nyttSpel);
+  rastText.on("click", nyttSpel);
 }
 
-function drawRast() {
+function updateRast() {
   stage.update();
+}
+
+function nyttSpel() {
+  location.reload();
 }
