@@ -4,23 +4,6 @@ function loadTryggC() {
     var tryggcBg = new createjs.Bitmap("bitmaps/tryggc.png");
     stage.addChild(tryggcBg);
 
-    var headset = new createjs.Bitmap("bitmaps/headset.png");
-    headset.x = 60;
-    headset.y = 150;
-    stage.addChild(headset);
-    saneraTooltip = new createjs.Bitmap("bitmaps/tooltip.png");
-    saneraTooltip.x = headset.x + 150;
-    saneraTooltip.y = headset.y + 200;
-    saneraTooltip.scaleY = saneraTooltip.scaleX = 3/5;
-    saneraTooltip.on("click", felVal);
-    stage.addChild(saneraTooltip);
-    csgTooltip = new createjs.Bitmap("bitmaps/tooltip.png");
-    csgTooltip.x = headset.x + 150;
-    csgTooltip.y = headset.y - 100;
-    csgTooltip.scaleY = csgTooltip.scaleX = 3/5;
-    csgTooltip.on("click", endTryggC);
-    stage.addChild(csgTooltip);
-
     dator = new createjs.Bitmap("bitmaps/computer.png");
     dator.x = 680;
     dator.y = 210;
@@ -45,11 +28,25 @@ function loadTryggC() {
     kaffeTooltip.on("click", taRast);
     stage.addChild(kaffeTooltip);
 
-    stage.addChild(scoreText);
-    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
+    var headset = new createjs.Bitmap("bitmaps/headset.png");
+    headset.x = 60;
+    headset.y = 150;
+    stage.addChild(headset);
+    saneraTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
+    saneraTooltip.x = headset.x+400;
+    saneraTooltip.y = headset.y+150;
+    saneraTooltip.scaleY = saneraTooltip.scaleX = 2/5;
+    saneraTooltip.on("click", felVal);
+    stage.addChild(saneraTooltip);
+    csgTooltip = new createjs.Bitmap("bitmaps/kontaktacsg.png");
+    csgTooltip.x = headset.x+400;
+    csgTooltip.y = headset.y+250;
+    csgTooltip.scaleY = csgTooltip.scaleX = 2/5;
+    csgTooltip.on("click", endTryggC);
+    stage.addChild(csgTooltip);
 
+    placeScore();
     textTooltip.text = "TryggC";
-    stage.addChild(textTooltip);
 }
 
 function updateTryggC() {

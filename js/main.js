@@ -1,17 +1,20 @@
 var score;
 var scoreText;
 var stage;
+var scoreGraphics;
+var textTooltip;
 
 function loadGame() {
     stage = new createjs.Stage("stageCanvas");
     createjs.Ticker.framerate = 60;
     stage.on("click", printXY);
 
+    scoreGraphics = new createjs.Bitmap("bitmaps/score.png");
+    scoreGraphics.scaleY = scoreGraphics.scaleX = 0.35;
     score = 0;
-    scoreText = new createjs.Text(score, "32px Arial", "#0F0");
-    scoreText.x = 10;
-    scoreText.y = 10;
-    stage.addChild(scoreText);
+    scoreText = new createjs.Text(score, "26px Arial", "#0F0");
+    textTooltip = new createjs.Text("Klottrare", "20px Arial", "#FFF");
+    /*textTooltip.shadow = new createjs.Shadow("#000", 0, 0, 0);*/
 
     window.addEventListener("resize", resizeCanvas);
     window.scrollTo(0, 1);
@@ -54,4 +57,14 @@ function taRast() {
   createjs.Ticker.off("tick", updateListener);
   stage.removeAllChildren();
   loadRast();
+}
+
+function placeScore() {
+  stage.addChild(scoreGraphics);
+  stage.addChild(scoreText);
+  scoreText.x = 28;
+  scoreText.y = 16;
+  stage.addChild(textTooltip);
+  textTooltip.x = 23;
+  textTooltip.y = 55;
 }

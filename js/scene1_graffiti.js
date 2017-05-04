@@ -1,7 +1,8 @@
-var vandal, klotter, klotterListener, stationListener, updateListener, textTooltip, station, spraypaintsound, station2;
+var vandal, klotter, klotterListener, stationListener, updateListener, station, spraypaintsound, station2, tooltipGraphics;
 
 function loadGraffiti() {
     updateListener = createjs.Ticker.on("tick", updateGraffiti);
+    spraypaintsound = new Audio("sounds/spraypaint.mp3");
 
     station = new createjs.Bitmap("bitmaps/station.png");
     stationListener = station.on("click", placeraGraffiti);
@@ -29,9 +30,10 @@ function loadGraffiti() {
     vandal.scaleY = 1.5;
     stage.addChild(vandal);
 
-
-
-    spraypaintsound = new Audio("sounds/spraypaint.mp3");
+    tooltipGraphics = new createjs.Bitmap("bitmaps/klottra.png");
+    stage.addChild(tooltipGraphics);
+    tooltipGraphics.x = stage.canvas.width/4;
+    tooltipGraphics.y = 600;
 
     station2 = new createjs.Bitmap("bitmaps/stationbg.png");
     stage.addChild(station2);
@@ -41,12 +43,7 @@ function loadGraffiti() {
     trafikant.y = vandal.y-50;
     trafikant.x = -500;
 
-    textTooltip = new createjs.Text("Klicka var som helst\nför att placera klotter.", "28px Arial", "#0ff");
-    textTooltip.x = 10;
-    textTooltip.y = 50;
-    textTooltip.shadow = new createjs.Shadow("#000", 2, 2, 10);
-    stage.addChild(textTooltip);
-    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
+    placeScore();
 }
 
 function updateGraffiti() {
@@ -56,6 +53,7 @@ function updateGraffiti() {
 function endGraffiti(event) {
     stage.x = 0;
     scoreText.x = textTooltip.x = 10;
+    scoreGraphics.x = 0;
     createjs.Ticker.off("tick", updateListener);
     stage.removeAllChildren();
     stage.update();
@@ -76,7 +74,7 @@ function placeraGraffiti(event) {
     sprayburk.x = klotter.x;
     sprayburk.y = 600;
     stage.addChild(sprayburk);
-    textTooltip.text = "Fyll nu i klottret."
+    stage.removeChild(tooltipGraphics);
     station.off("click", stationListener);
 }
 
@@ -92,8 +90,8 @@ function changeklotter(event) {
 }
 
 
-var s = 15;
-var m = 1;
+var s = 5;
+var m = 150;
 var p = s*m;
 var fadeListener;
 function paneraScenen() {
@@ -102,6 +100,7 @@ function paneraScenen() {
     stage.x += s;
     scoreText.x -= s;
     textTooltip.x -= s;
+    scoreGraphics.x -= s;
   }
   else if (p < -0.5*s*m) {
     createjs.Ticker.off("tick", paneraListener);

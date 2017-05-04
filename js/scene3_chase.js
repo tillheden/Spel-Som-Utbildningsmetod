@@ -5,8 +5,6 @@ function loadChase() {
     bg1 = station.clone();
     bg2 = new createjs.Bitmap("bitmaps/stationbg.png");
     bg2.x = stage.canvas.width;
-    bg1.on("click", jaga);
-    bg2.on("click", jaga);
     stage.addChild(bg1);
     stage.addChild(bg2);
     stage.addChild(klotter);
@@ -43,14 +41,26 @@ function loadChase() {
     csg.speed = 0;
     stage.addChild(csg);
 
-    stage.addChild(scoreText);
-    stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
+    var run = new createjs.Bitmap("bitmaps/run.png");
+    stage.addChild(run);
+    run.x = 15;
+    run.y = 600;
+    run.on("click", jaga);
+
+    tooltipGraphics = new createjs.Bitmap("bitmaps/gripklottraren.png");
+    stage.addChild(tooltipGraphics);
+    tooltipGraphics.y = 20;
+    tooltipGraphics.x = 3*stage.canvas.width/8;
+    tooltipGraphics.scaleY = tooltipGraphics.scaleX = 0.5;
+
+    placeScore();
+    textTooltip.text = "CSG";
 }
 
 function jaga(event) {
     if (csg.currentAnimation === "csg_idle") csg.gotoAndPlay("csg_run");
-    /*csg.speed += 3.4;*/
-    csg.speed += 30.4;
+    csg.speed += 3.4;
+    /*csg.speed += 30.4;*/
 }
 
 var c = 0;
@@ -60,10 +70,10 @@ function updateChase() {
   if (vandal.x - csg.x < 75) {
     score += Math.floor(100000/c);
     scoreText.text = score;
-    endChase("CSG tog fast klottraren.\nBra jobbat!");
+    endChase(1);
   }
   else if (vandal.x - csg.x > 2250)
-    endChase("Klottraren kom undan!");
+    endChase(0);
 
   if (csg.x > 1300) {
     csg.x = -50;

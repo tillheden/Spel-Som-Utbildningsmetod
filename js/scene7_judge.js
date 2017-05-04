@@ -1,11 +1,12 @@
 function loadJudge() {
   updateListener = createjs.Ticker.on("tick", updateJudge);
 
-  var skadereglerare = new createjs.Bitmap("bitmaps/tryggc.png");
+  var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
   stage.addChild(skadereglerare);
 
-  stage.addChild(scoreText);
-  stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
+
+  placeScore();
+  textTooltip.text = "Skadereglerare";
 }
 
 function updateJudge() {

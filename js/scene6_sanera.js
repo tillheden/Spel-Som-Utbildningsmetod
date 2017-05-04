@@ -1,3 +1,4 @@
+var taBild
 function loadSanera() {
     updateListener = createjs.Ticker.on("tick", updateSanera);
 
@@ -13,22 +14,25 @@ function loadSanera() {
     sanerare.y = csg.y;
     stage.addChild(sanerare);
 
-    if (klotter.x < stage.canvas.width / 2) sanerare.x = klotter.x + 200;
+    if (klotter.x < stage.canvas.width / 2) sanerare.x = klotter.x + 300;
     else sanerare.x = klotter.x - 200;
 
-    stage.addChild(kamera);
-    kamera.y = sanerare.y;
-    kamera.x = sanerare.x;
-    kamera.on("click", dokumentera);
-    stage.addChild(kameraTooltip);
-    kameraTooltip.x = kamera.x-25;
-    kameraTooltip.y = kamera.y-25;
+    sanera = new createjs.Bitmap("bitmaps/sanera.png");
+    stage.addChild(sanera);
+    sanera.y = klotter.y+60;
+    sanera.x = klotter.x-200;
+    sanera.scaleY = sanera.scaleX = 2/5;
+    sanera.on("click", startaSanering);
 
-    stage.addChild(textTooltip);
-    textTooltip.text = "Sanera klottret.";
+    taBild = new createjs.Bitmap("bitmaps/tabild.png");
+    stage.addChild(taBild);
+    taBild.y = klotter.y;
+    taBild.x = klotter.x-200;
+    taBild.scaleY = taBild.scaleX = 2/5;
+    taBild.on("click", taFörebild);
 
-    stage.addChild(scoreText);
-    stage.setChildIndex(scoreText, stage.getNumChildren()-1);
+    placeScore();
+    textTooltip.text = "Sanerare";
 }
 
 function updateSanera() {
@@ -43,15 +47,17 @@ function endSanera(event) {
 
 var san, sanListener
 function startaSanering(event) {
-  stage.removeChild(kamera);
-  stage.removeChild(kameraTooltip);
+  stage.removeChild(taBild);
   san = new createjs.Bitmap("bitmaps/sanerat.png");
   san.alpha = 0.8;
   san.x = klotter.x;
   san.y = klotter.y;
+  klotter.removeAllEventListeners();
+  sanera.removeAllEventListeners();
+  sanera.on("click", saneraKlotter);
   stage.addChild(san);
   sanListener = san.on("click", saneraKlotter);
-  addScore(event, 100)
+  addScore(event, 100);
 }
 
 function saneraKlotter(event) {
@@ -59,19 +65,48 @@ function saneraKlotter(event) {
   addScore(event, 100);
   if (san.alpha >= 1) {
     san.off("click", sanListener);
-    stage.addChild(kamera);
-    var mobil = new createjs.Bitmap("bitmaps/phone.png");
-    mobil.x = sanerare.x;
-    mobil.y = kamera.y+100;
-    mobil.scaleY = mobil.scaleX = 0.33;
-    stage.addChild(kameraTooltip);
-    stage.addChild(mobil);
-    mobilTooltip = new createjs.Bitmap("bitmaps/kollavtal.png");
-    mobilTooltip.x = mobil.x + 20;
-    mobilTooltip.y = mobil.y - 20;
-    mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
-    mobilTooltip.on("click", endSanera);
-    stage.addChild(mobilTooltip);
-    mobil.on("click", endSanera);
+    stage.addChild(taBild);
+    taBild.removeAllEventListeners();
+    taBild.on("click", taEfterbild);
+    stage.removeChild(sanera);
+    stage.addChild(tooltipGraphics);
+    tooltipGraphics.removeAllEventListeners();
+    tooltipGraphics.on("click", visaSanering);
   }
+}
+
+function visaSanering() {
+  var sanering = new createjs.Bitmap("bitmaps/sanering.png");
+  stage.addChild(sanering);
+  sanering.x = tooltipGraphics.x;
+  sanering.y = 80;
+  sanering.scaleX = sanering.scaleY = 0.25;
+  tooltipGraphics.removeAllEventListeners();
+  tooltipGraphics.on("click", endSanera);
+  var c1, c2, c3;
+  if (före == true) c1 = new createjs.Bitmap("bitmaps/checkmark.png");
+  else c1 = new createjs.Bitmap("bitmaps/cross.png");
+  c2 = new createjs.Bitmap("bitmaps/checkmark.png");
+  if (efter == true) c3 = new createjs.Bitmap("bitmaps/checkmark.png");
+  else c3 = new createjs.Bitmap("bitmaps/cross.png");
+  c1.scaleY = c1.scaleX = c2.scaleY = c2.scaleX = c3.scaleY = c3.scaleX = 0.23;
+  c1.x = c2.x = c3.x = sanering.x + 140;
+  c1.y = sanering.y + 35;
+  c2.y = sanering.y + 65;
+  c3.y = sanering.y + 97;
+  stage.addChild(c1);
+  stage.addChild(c2);
+  stage.addChild(c3);
+}
+
+var före = false
+function taFörebild(event) {
+  före = true;
+  dokumentera(event);
+}
+
+var efter = false
+function taEfterbild(event) {
+  efter = true;
+  dokumentera(event);
 }

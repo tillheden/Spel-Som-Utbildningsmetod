@@ -1,4 +1,4 @@
-var notifikation, mobil, notifikationTooltip
+var notifikation, mobil, notListener
 
 function loadTrafikent() {
   updateListener = createjs.Ticker.on("tick", updateTrafikent);
@@ -21,26 +21,16 @@ function loadTrafikent() {
   notifikation = new createjs.Bitmap("bitmaps/notification.png");
   notifikation.x = 930;
   notifikation.y = 275;
-  /*notifikation.scaleY = notifikation.scaleX = 0.85;*/
-  stage.addChild(notifikation);
-  notifikation.on("click", kollaSkadeDB);
-  notifikationTooltip = new createjs.Bitmap("bitmaps/kollavtal.png");
-  notifikationTooltip.x = notifikation.x + 20;
-  notifikationTooltip.y = notifikation.y - 20;
-  notifikationTooltip.scaleY = notifikationTooltip.scaleX = 2/5;
-  notifikationTooltip.on("click", kollaSkadeDB);
-  stage.addChild(notifikationTooltip);
+
+  notListener = createjs.Ticker.on("tick", not);
 
   mobil = new createjs.Bitmap("bitmaps/phone.png");
   mobil.x = 465;
   mobil.y = 530;
   stage.addChild(mobil);
 
-  stage.addChild(textTooltip);
+  placeScore();
   textTooltip.text = "Trafikentreprenör";
-
-  stage.addChild(scoreText);
-  stage.setChildIndex(scoreText, stage.getNumChildren() - 1);
 }
 
 function updateTrafikent() {
@@ -53,15 +43,19 @@ function endTrafikent() {
   loadSanera();
 }
 
-function kollaSkadeDB(event) {
-  stage.removeChild(notifikation);
-  stage.removeChild(notifikationTooltip);
-  mobilTooltip = new createjs.Bitmap("bitmaps/kollavtal.png");
-  mobilTooltip.x = mobil.x + 20;
-  mobilTooltip.y = mobil.y - 20;
-  mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
-  mobilTooltip.on("click", endTrafikent);
-  stage.addChild(mobilTooltip);
-  mobil.on("click", endTrafikent);
-  addScore(event, 150);
+var q = 100;
+function not(event) {
+  if (q == 0) {
+    stage.addChild(notifikation);
+    createjs.Ticker.off("tick", notListener);
+    mobilTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
+    mobilTooltip.x = mobil.x + 70;
+    mobilTooltip.y = mobil.y + 20;
+    mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
+    mobilTooltip.on("click", endTrafikent);
+    stage.addChild(mobilTooltip);
+    mobil.on("click", endTrafikent);
+  }
+  else
+    q -= 1;
 }
