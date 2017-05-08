@@ -11,7 +11,7 @@ function loadSanera() {
 
     sanerare = new createjs.Bitmap("bitmaps/sanerare.png");
     sanerare.scaleX = sanerare.scaleY = 0.5;
-    sanerare.y = csg.y;
+    sanerare.y = vandal.y;
     stage.addChild(sanerare);
 
     if (klotter.x < stage.canvas.width / 2) sanerare.x = klotter.x + 300;

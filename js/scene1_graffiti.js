@@ -57,12 +57,15 @@ function endGraffiti(event) {
     createjs.Ticker.off("tick", updateListener);
     stage.removeAllChildren();
     stage.update();
-    // TODO: play cutscene
-    loadTryggC();
+
+    /*loadTryggC();*/
+    /*scorescreen();*/
+    loadMeeting();
 }
 
 var sprayburk
 function placeraGraffiti(event) {
+
     spraypaintsound.play();
     klotter = new createjs.Bitmap("bitmaps/graffiti.png");
     klotter.alpha = 0.4;
@@ -76,6 +79,7 @@ function placeraGraffiti(event) {
     stage.addChild(sprayburk);
     stage.removeChild(tooltipGraphics);
     station.off("click", stationListener);
+    endGraffiti();
 }
 
 var paneraListener

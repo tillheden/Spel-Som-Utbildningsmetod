@@ -7,6 +7,7 @@ function loadCSG(msg) {
   klotter.x = klotter.originalX;
   klotter.y = klotter.originalY;
   sprayburk.x = klotter.x
+  sprayburk.on("click", taBevis);
 
   stage.addChild(csg);
   csg.gotoAndPlay("csg_idle");
@@ -50,4 +51,9 @@ function dokumentera(event) {
 function registreraISkadeDB() {
   addScore(event, 200);
   endCSG();
+}
+
+function taBevis(event) {
+  addScore(event, 150);
+  stage.removeChild(sprayburk);
 }
