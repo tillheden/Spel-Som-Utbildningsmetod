@@ -44,24 +44,26 @@ function loadChase() {
 
     var run = new createjs.Bitmap("bitmaps/run.png");
     stage.addChild(run);
-    run.x = 15;
-    run.y = 600;
+    run.x = 100;
+    run.y = 550;
     run.on("click", jaga);
 
     tooltipGraphics = new createjs.Bitmap("bitmaps/gripklottraren.png");
     stage.addChild(tooltipGraphics);
-    tooltipGraphics.y = 20;
+    tooltipGraphics.y = stage.canvas.height / 3;
     tooltipGraphics.x = 3*stage.canvas.width/8;
-    tooltipGraphics.scaleY = tooltipGraphics.scaleX = 0.5;
+    tooltipGraphics.scaleY = tooltipGraphics.scaleX = 0.75;
 
     placeScore();
     textTooltip.text = "CSG";
+    endChase();
 }
 
 function jaga(event) {
     if (csg.currentAnimation === "csg_idle") csg.gotoAndPlay("csg_run");
     csg.speed += 3.4;
     /*csg.speed += 30.4;*/
+    stage.removeChild(tooltipGraphics);
 }
 
 var c = 0;

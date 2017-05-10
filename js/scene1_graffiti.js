@@ -1,4 +1,4 @@
-var vandal, klotter, klotterListener, stationListener, updateListener, station, spraypaintsound, station2, tooltipGraphics;
+var klotterListener, stationListener, updateListener, station, spraypaintsound, station2, tooltipGraphics;
 
 function loadGraffiti() {
     updateListener = createjs.Ticker.on("tick", updateGraffiti);
@@ -8,26 +8,6 @@ function loadGraffiti() {
     stationListener = station.on("click", placeraGraffiti);
     stage.addChild(station);
 
-    var vandalSheet = new createjs.SpriteSheet({
-        animations: {
-            vandal_idle: {
-                frames: [0]
-            },
-            vandal_run: {
-                frames: [1, 2, 3, 4, 5, 6, 7, 8],
-                speed: 0.25
-            },
-        },
-        images: ["bitmaps/vandal.png"],
-        frames: {
-            width: 200,
-            height: 300
-        }
-    });
-    vandal = new createjs.Sprite(vandalSheet);
-    vandal.x = 800;
-    vandal.y = 260;
-    vandal.scaleY = 1.5;
     stage.addChild(vandal);
 
     tooltipGraphics = new createjs.Bitmap("bitmaps/klottra.png");
@@ -58,20 +38,16 @@ function endGraffiti(event) {
     stage.removeAllChildren();
     stage.update();
 
-    /*loadTryggC();*/
+    loadTryggC();
     /*scorescreen();*/
-    loadMeeting();
+    /*loadMeeting();*/
 }
 
-var sprayburk
+var sprayburk, paneraListener
 function placeraGraffiti(event) {
-
     spraypaintsound.play();
-    klotter = new createjs.Bitmap("bitmaps/graffiti.png");
-    klotter.alpha = 0.4;
     klotter.originalX = klotter.x = event.stageX - (254 / 2);
     klotter.originalY = klotter.y = event.stageY - (320 / 2);
-    klotterListener = klotter.on("click", changeklotter);
     stage.addChild(klotter);
     sprayburk = new createjs.Bitmap("bitmaps/bevis.png");
     sprayburk.x = klotter.x;
@@ -79,28 +55,17 @@ function placeraGraffiti(event) {
     stage.addChild(sprayburk);
     stage.removeChild(tooltipGraphics);
     station.off("click", stationListener);
+    /*paneraListener = createjs.Ticker.on("tick", paneraScenen);*/
     endGraffiti();
 }
 
-var paneraListener
-function changeklotter(event) {
-    spraypaintsound.play();
-    klotter.alpha += 0.2;
-    addScore(event, 100);
-    if (klotter.alpha == 1) {
-        klotter.off("click", klotterListener);
-        paneraListener = createjs.Ticker.on("tick", paneraScenen);
-    }
-}
-
-
 var s = 5;
-var m = 150;
+var m = 200;
 var p = s*m;
 var fadeListener;
 function paneraScenen() {
   p -= s;
-  if (p > 0) {
+  if (p > 0 && p < s*m-300) {
     stage.x += s;
     scoreText.x -= s;
     textTooltip.x -= s;
@@ -114,7 +79,7 @@ function paneraScenen() {
 
 function fadeStage() {
   if (stage.alpha > 0) {
-    stage.alpha -= 0.055;
+    stage.alpha -= 0.025;
   }
   else {
     createjs.Ticker.off("tick", fadeListener);

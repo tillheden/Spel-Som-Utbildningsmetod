@@ -1,6 +1,5 @@
 function loadMeeting() {
   updateListener = createjs.Ticker.on("tick", updateMeeting);
-  /*createjs.Ticker.framerate = 1;*/
   stage.addChild(station);
   station.on("click", skjut);
 
@@ -17,24 +16,15 @@ function endMeeting() {
 }
 
 function skjut(event) {
-  var projectile = new createjs.Bitmap("bitmaps/cross.png");
+  var projectile = new createjs.Bitmap("bitmaps/ruta.png");
   /*projectile.scaleY = projectile.scaleX = 1/3;*/
   stage.addChild(projectile);
-  projectile.x = stage.canvas.width / 2 - 32;
-  projectile.y = stage.canvas.height - 32;
-  var a = Math.sqrt(Math.pow(stage.canvas.width - event.stageX-32, 2) + Math.pow(stage.canvas.height - event.stageY, 2));
-  var b = Math.sqrt(Math.pow(stage.canvas.width/2 - event.stageX-32, 2) + Math.pow(stage.canvas.height - event.stageY, 2));
-  var c = stage.canvas.width / 2;
-  projectile.alpha = Math.acos((a*a - b*b - c*c)/(-2*b*c));
+  projectile.originalX = projectile.x = (stage.canvas.width / 2);
+  projectile.originalY = projectile.y = stage.canvas.height;
+  var a = Math.sqrt(Math.pow(stage.canvas.width - event.stageX+32, 2) + Math.pow(projectile.originalY - event.stageY+32, 2));
+  var b = Math.sqrt(Math.pow(projectile.originalX - event.stageX+32, 2) + Math.pow(projectile.originalY - event.stageY+32, 2));
+  var c = projectile.originalX;
+  projectile.angle = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) - Math.pow(c, 2)) / (-2*b*c));
   projectile.distanceTraveled = 0;
   projectile.listener = createjs.Ticker.on("tick", moveProjectile, null, false, {proj: projectile});
-  console.log(projectile);
-}
-
-function moveProjectile(event, data) {
-  data.proj.distanceTraveled += 5;
-  data.proj.x = stage.canvas.width/2 -32 + data.proj.distanceTraveled*Math.cos(data.proj.alpha);
-  data.proj.y = stage.canvas.height-32 - data.proj.distanceTraveled*Math.sin(data.proj.alpha);
-  console.log("["+data.proj.x+", "+data.proj.y+"]");
-  if (data.proj.y < 200) 
 }

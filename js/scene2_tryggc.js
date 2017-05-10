@@ -1,4 +1,4 @@
-var dator, datorListener, datorTooltip, saneraTooltip
+var dator, datorListener, datorTooltip, saneraTooltip, avtal
 function loadTryggC() {
     updateListener = createjs.Ticker.on("tick", updateTryggC);
     var tryggcBg = new createjs.Bitmap("bitmaps/tryggc.png");
@@ -47,6 +47,7 @@ function loadTryggC() {
 
     placeScore();
     textTooltip.text = "TryggC";
+    endTryggC();
 }
 
 function updateTryggC() {
@@ -60,12 +61,21 @@ function endTryggC(event) {
 }
 
 function displaydator(event) {
-    addScore(event, 250);
     stage.removeChild(datorTooltip);
     dator.off("click", datorListener);
+    avtal = new createjs.Bitmap("bitmaps/sanering.png");
+    stage.addChild(avtal);
+    avtal.x = dator.x;
+    avtal.y = dator.y;
+    avtal.on("click", removeAvtal);
+    addScore(event, 250);
+}
+
+function removeAvtal() {
+  stage.removeChild(avtal);
 }
 
 function felVal(event) {
-  addScore(event, -250);
+  addScore(event, -200);
   stage.removeChild(saneraTooltip);
 }

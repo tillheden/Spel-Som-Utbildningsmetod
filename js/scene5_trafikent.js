@@ -43,7 +43,9 @@ function endTrafikent() {
   loadSanera();
 }
 
-var q = 100;
+/*  q = 100*/
+var q = 0;
+var stotText, stotande, inteStotande
 function not(event) {
   if (q == 0) {
     stage.addChild(notifikation);
@@ -54,8 +56,39 @@ function not(event) {
     mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
     mobilTooltip.on("click", endTrafikent);
     stage.addChild(mobilTooltip);
+
     mobil.on("click", endTrafikent);
+    stotText = new createjs.Text("Är klottret stötande?", "50px Arial", "#FFF");
+    stotText.shadow = new createjs.Shadow("#000", 0, 0, 10);
+    stotText.x = dator.x;
+    stotText.y = dator.y - 150;
+    stage.addChild(stotText);
+
+    stotande = new createjs.Text("Stötande", "50px Arial", "#FFF");
+    stotande.shadow = new createjs.Shadow("#000", 0, 0, 10);
+    stage.addChild(stotande);
+    stotande.x = dator.x;
+    stotande.y = dator.y-75;
+    stotande.on("click", stot);
+
+    inteStotande = new createjs.Text("Inte Stötande", "50px Arial", "#FFF");
+    inteStotande.shadow = new createjs.Shadow("#000", 0, 0, 10);
+    stage.addChild(inteStotande);
+    inteStotande.x = dator.x;
+    inteStotande.y = dator.y;
+    inteStotande.on("click", stot);
+    endTrafikent();
   }
   else
     q -= 1;
+}
+
+function stot(event) {
+  if ((klotter.stotande == true && event.target == stotande) || (klotter.stotande == false && event.target == inteStotande))
+    addScore(event, 150);
+  else
+    addScore(event, -100);
+  stage.removeChild(stotande);
+  stage.removeChild(inteStotande);
+  stage.removeChild(stotText);
 }

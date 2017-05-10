@@ -15,6 +15,12 @@ function loadRast() {
   stage.addChild(kaffemug);
   kaffemug.on("click", nyttSpel);
   rastText.on("click", nyttSpel);
+
+  db.ref().once("value").then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot){
+    console.log(childSnapshot.key +", "+childSnapshot.val());
+    });
+  });
 }
 
 function updateRast() {
@@ -23,4 +29,19 @@ function updateRast() {
 
 function nyttSpel() {
   location.reload();
+}
+
+function addHighscore() {
+playername = {};
+playername.name = input.value;
+  if (playername.name != "" && playername.name != "amountOfEntries") {
+    var db = firebase.database();
+    db.ref("amountOfEntries").once("value").then(function(snapshot){
+      playername.n = snapshot.val() + 1;
+      db.ref("amountOfEntries").set(playername.n);
+      var q = playername.n +":||:"+ playername.name;
+      db.ref(q).set(Math.random()*1000);
+    });
+
+  }
 }

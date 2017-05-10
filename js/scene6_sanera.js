@@ -1,4 +1,4 @@
-var taBild
+var taBild, skjutSaneringListener
 function loadSanera() {
     updateListener = createjs.Ticker.on("tick", updateSanera);
 
@@ -7,7 +7,6 @@ function loadSanera() {
     stage.addChild(klotter);
     klotter.x = klotter.originalX;
     klotter.y = klotter.originalY;
-    klotter.on("click", startaSanering);
 
     sanerare = new createjs.Bitmap("bitmaps/sanerare.png");
     sanerare.scaleX = sanerare.scaleY = 0.5;
@@ -45,33 +44,105 @@ function endSanera(event) {
     loadJudge();
 }
 
-var san, sanListener
+var klotterBlock = {};
 function startaSanering(event) {
   stage.removeChild(taBild);
-  san = new createjs.Bitmap("bitmaps/sanerat.png");
-  san.alpha = 0.8;
-  san.x = klotter.x;
-  san.y = klotter.y;
+  stage.removeChild(sanera);
   klotter.removeAllEventListeners();
-  sanera.removeAllEventListeners();
-  sanera.on("click", saneraKlotter);
-  stage.addChild(san);
-  sanListener = san.on("click", saneraKlotter);
-  addScore(event, 100);
+  sanerare.y = 700;
+  sanerare.x = stage.canvas.width / 2;
+  klotterBlock.antalBlock = 0;
+  for (var i = 0; i < 5; i++) {
+    klotterBlock[i] = new createjs.Bitmap("bitmaps/ruta.png");
+    klotterBlock[i].x = Math.random()*(stage.canvas.width-200) + 200;
+    klotterBlock[i].y = Math.random()*100;
+    stage.addChild(klotterBlock[i]);
+    klotterBlock.antalBlock += 1;
+  }
+  klotterBlock.moveListener = createjs.Ticker.on("tick", moveKlotterBlock);
+  skjutSaneringListener = stage.on("click", skjutSanering);
 }
 
-function saneraKlotter(event) {
-  san.alpha += 0.1;
-  addScore(event, 100);
-  if (san.alpha >= 1) {
-    san.off("click", sanListener);
-    stage.addChild(taBild);
-    taBild.removeAllEventListeners();
-    taBild.on("click", taEfterbild);
-    stage.removeChild(sanera);
-    stage.addChild(tooltipGraphics);
-    tooltipGraphics.removeAllEventListeners();
-    tooltipGraphics.on("click", visaSanering);
+function moveKlotterBlock(event) {
+  for (var i = 0; i < klotterBlock.antalBlock; i++) {
+    klotterBlock[i].y += 1;
+    if (klotterBlock[i].y > 740) {
+      event.stageX = klotterBlock[i].x;
+      event.stageY = klotterBlock[i].y-100;
+      addScore(event, -100);
+      klotterBlock[i].x = Math.random()*(stage.canvas.width-200) + 200;
+      klotterBlock[i].y = Math.random()*100;
+    }
+  }
+}
+
+var ammo = 50;
+function skjutSanering(event) {
+  ammo -= 1;
+  if (ammo < 0) {
+    stage.off("click", skjutSaneringListener);
+    sanerare.y = vandal.y;
+    createjs.Ticker.off("tick", klotterBlock.moveListener);
+    for (var i = 0; i < klotterBlock.antalBlock; i++) {
+      stage.removeChild(klotterBlock[i]);
+      stage.setChildIndex(sanerare, stage.getNumChildren()-1);
+    }
+  } else {
+    var projectile = new createjs.Bitmap("bitmaps/camera.png");
+    /*projectile.scaleY = projectile.scaleX = 1/3;*/
+    stage.addChild(projectile);
+    projectile.originalX = projectile.x = (stage.canvas.width / 2);
+    projectile.originalY = projectile.y = stage.canvas.height;
+    var a = Math.sqrt(Math.pow(stage.canvas.width - event.stageX+32, 2) + Math.pow(projectile.originalY - event.stageY+32, 2));
+    var b = Math.sqrt(Math.pow(projectile.originalX - event.stageX+32, 2) + Math.pow(projectile.originalY - event.stageY+32, 2));
+    var c = projectile.originalX;
+    projectile.angle = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) - Math.pow(c, 2)) / (-2*b*c));
+    projectile.distanceTraveled = 0;
+    projectile.moveListener = createjs.Ticker.on("tick", moveProjectile, null, false, {proj: projectile});
+    projectile.collisionListener = createjs.Ticker.on("tick", collisionCheck, null, false, {proj: projectile});
+  }
+}
+
+function moveProjectile(event, data) {
+  data.proj.x = data.proj.originalX + data.proj.distanceTraveled*Math.cos(data.proj.angle);
+  data.proj.y = data.proj.originalY - data.proj.distanceTraveled*Math.sin(data.proj.angle);
+  data.proj.distanceTraveled += 10;
+  if (data.proj.y < 0-64 || data.proj.x > 1334-64 || data.proj.x < 0-64) {
+    removeProjectile(data.proj);
+  }
+}
+
+function removeProjectile(p) {
+  createjs.Ticker.off("tick", p.moveListener);
+  createjs.Ticker.off("tick", p.collisionListener);
+  stage.removeChild(p);
+}
+
+function collisionCheck(event, data) {
+  for (var i = 0; i < klotterBlock.antalBlock; i++) {
+    if (data.proj.y - klotterBlock[i].y < 5) {
+      var intersection = ndgmr.checkRectCollision(klotterBlock[i], data.proj);
+      if (intersection) {
+        var san = new createjs.Bitmap("bitmaps/sanerat.png");
+        stage.addChild(san);
+        san.x = Math.random()*(klotter.getBounds().width-100)+klotter.x;
+        san.y = Math.random()*(klotter.getBounds().height-100)+klotter.y;
+        stage.setChildIndex(san, 5);
+        event.stageX = klotterBlock[i].x;
+        event.stageY = klotterBlock[i].y;
+        addScore(event, 25);
+        klotterBlock[i].x = Math.random()*(stage.canvas.width-200) + 200;
+        klotterBlock[i].y = Math.random()*100;
+        if (i == 4) {
+          klotterBlock[klotterBlock.antalBlock] = new createjs.Bitmap("bitmaps/ruta.png");
+          klotterBlock[klotterBlock.antalBlock].x = Math.random()*(stage.canvas.width-200) + 200;
+          klotterBlock[klotterBlock.antalBlock].y = Math.random()*100;
+          stage.addChild(klotterBlock[klotterBlock.antalBlock]);
+          klotterBlock.antalBlock += 1;
+        }
+        removeProjectile(data.proj);
+      }
+    }
   }
 }
 
