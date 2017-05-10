@@ -10,12 +10,12 @@ function loadTrafikent() {
   kaffemug.x = 1060;
   kaffemug.y = 560;
   stage.addChild(kaffemug);
-  kaffemug.on("click", taRast);
-  var kaffeTooltip = new createjs.Bitmap("bitmaps/tarast.png");
+  kaffemug.on("click", loadScoreScreen);
+  var kaffeTooltip = new createjs.Bitmap("bitmaps/coffee.png");
   kaffeTooltip.x = kaffemug.x + 50;
   kaffeTooltip.y = kaffemug.y + 100;
   kaffeTooltip.scaleY = kaffeTooltip.scaleX = 2/5;
-  kaffeTooltip.on("click", taRast);
+  kaffeTooltip.on("click", scoreScreen);
   stage.addChild(kaffeTooltip);
 
   notifikation = new createjs.Bitmap("bitmaps/notification.png");
@@ -43,8 +43,8 @@ function endTrafikent() {
   loadSanera();
 }
 
-/*  q = 100*/
-var q = 0;
+  /*q = 100*/
+var q = 100;
 var stotText, stotande, inteStotande
 function not(event) {
   if (q == 0) {
@@ -77,7 +77,7 @@ function not(event) {
     inteStotande.x = dator.x;
     inteStotande.y = dator.y;
     inteStotande.on("click", stot);
-    endTrafikent();
+    /*endTrafikent();*/
   }
   else
     q -= 1;

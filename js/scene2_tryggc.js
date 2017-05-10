@@ -20,12 +20,12 @@ function loadTryggC() {
     kaffemug.x = 1050;
     kaffemug.y = 480;
     stage.addChild(kaffemug);
-    kaffemug.on("click", taRast);
+    kaffemug.on("click", loadScoreScreen);
     var kaffeTooltip = new createjs.Bitmap("bitmaps/tarast.png");
     kaffeTooltip.x = kaffemug.x + 50;
     kaffeTooltip.y = kaffemug.y + 100;
     kaffeTooltip.scaleY = kaffeTooltip.scaleX = 2/5;
-    kaffeTooltip.on("click", taRast);
+    kaffeTooltip.on("click", scoreScreen);
     stage.addChild(kaffeTooltip);
 
     var headset = new createjs.Bitmap("bitmaps/headset.png");
@@ -47,7 +47,7 @@ function loadTryggC() {
 
     placeScore();
     textTooltip.text = "TryggC";
-    endTryggC();
+    /*endTryggC();*/
 }
 
 function updateTryggC() {

@@ -3,11 +3,10 @@ function loadJudge() {
 
   var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
   stage.addChild(skadereglerare);
-  skadereglerare.on("click", scorescreen);
 
   placeScore();
   textTooltip.text = "Skadereglerare";
-
+  /*endJudge();*/
 }
 
 function updateJudge() {

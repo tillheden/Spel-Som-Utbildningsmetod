@@ -4,6 +4,7 @@ function loadMeeting() {
   station.on("click", skjut);
 
   placeScore();
+  /*endMeeting();*/
 }
 
 function updateMeeting() {
@@ -13,6 +14,7 @@ function updateMeeting() {
 function endMeeting() {
   createjs.Ticker.off("tick", updateListener);
   stage.removeAllChildren();
+  loadScoreScreen();
 }
 
 function skjut(event) {

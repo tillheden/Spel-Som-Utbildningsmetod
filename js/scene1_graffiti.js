@@ -55,8 +55,8 @@ function placeraGraffiti(event) {
     stage.addChild(sprayburk);
     stage.removeChild(tooltipGraphics);
     station.off("click", stationListener);
-    /*paneraListener = createjs.Ticker.on("tick", paneraScenen);*/
-    endGraffiti();
+    paneraListener = createjs.Ticker.on("tick", paneraScenen);
+    /*endGraffiti();*/
 }
 
 var s = 5;

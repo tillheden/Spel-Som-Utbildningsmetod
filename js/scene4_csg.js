@@ -1,5 +1,5 @@
 var dok
-function loadCSG(msg) {
+function loadCSG(s) {
   updateListener = createjs.Ticker.on("tick", updateCSG);
   stage.addChild(station);
   stage.addChild(klotter);
@@ -23,12 +23,13 @@ function loadCSG(msg) {
   if (msg == 0) tooltipGraphics = new createjs.Bitmap("bitmaps/komundan.png");
   else tooltipGraphics = new createjs.Bitmap("bitmaps/grip.png");
   tooltipGraphics.on("click", registreraISkadeDB);
-  tooltipGraphics.x = 1015;
+  tooltipGraphics.x = 1050;
   tooltipGraphics.y = 15;
-  tooltipGraphics.scaleX = tooltipGraphics.scaleY = 0.25;
+  tooltipGraphics.scaleX = tooltipGraphics.scaleY = 0.45;
   stage.addChild(tooltipGraphics);
 
   placeScore();
+  /*endCSG();*/
 }
 
 function updateCSG() {
@@ -49,7 +50,6 @@ function dokumentera(event) {
 }
 
 function registreraISkadeDB() {
-  addScore(event, 200);
   endCSG();
 }
 

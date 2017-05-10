@@ -52,10 +52,10 @@ function textAnimtion() {
    }
 }
 
-function taRast() {
+function scoreScreen() {
   createjs.Ticker.off("tick", updateListener);
   stage.removeAllChildren();
-  loadRast();
+  loadScoreScreen();
 }
 
 function placeScore() {

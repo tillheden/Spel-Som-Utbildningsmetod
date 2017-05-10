@@ -37,6 +37,7 @@ function loadChase() {
     csg.scaleY = 1.6;
     csg.gotoAndPlay("csg_idle");
     csg.x = 0;
+    vandal.x = stage.canvas.width/3;
     csg.y = vandal.y-50;
     csg.on("click", jaga);
     csg.speed = 0;
@@ -56,12 +57,12 @@ function loadChase() {
 
     placeScore();
     textTooltip.text = "CSG";
-    endChase();
+    /*endChase();*/
 }
 
 function jaga(event) {
     if (csg.currentAnimation === "csg_idle") csg.gotoAndPlay("csg_run");
-    csg.speed += 3.4;
+    csg.speed += 2.4;
     /*csg.speed += 30.4;*/
     stage.removeChild(tooltipGraphics);
 }
@@ -71,9 +72,7 @@ function updateChase() {
   stage.update();
   c += 1;
   if (vandal.x - csg.x < 75) {
-    score += Math.floor(100000/c);
-    scoreText.text = score;
-    endChase(1);
+    endChase(Math.floor(100000/c));
   }
   else if (vandal.x - csg.x > 2250)
     endChase(0);
@@ -96,9 +95,9 @@ function updateChase() {
   vandal.x += 6;
 }
 
-function endChase(msg) {
+function endChase(score) {
     createjs.Ticker.off("tick", updateListener);
     csg.removeAllEventListeners();
     stage.removeAllChildren();
-    loadCSG(msg);
+    loadCSG(score);
 }
