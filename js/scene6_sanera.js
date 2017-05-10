@@ -67,7 +67,7 @@ function startaSanering(event) {
 
 function moveKlotterBlock(event) {
   for (var i = 0; i < klotterBlock.antalBlock; i++) {
-    klotterBlock[i].y += 1;
+    klotterBlock[i].y += 1.5;
     if (klotterBlock[i].y > 740) {
       event.stageX = klotterBlock[i].x;
       event.stageY = klotterBlock[i].y-100;
@@ -96,7 +96,7 @@ function skjutSanering(event) {
     stage.addChild(fortsatt);
     fortsatt.on("click", visaSanering);
     fortsatt.y = 50;
-    fortsatt.x = stage.canvas.width * 0.8;
+    fortsatt.x = stage.canvas.width * 0.8
   } else {
     var projectile = new createjs.Bitmap("bitmaps/waterprojectile.png");
     /*projectile.scaleY = projectile.scaleX = 1/3;*/
@@ -110,7 +110,6 @@ function skjutSanering(event) {
     projectile.distanceTraveled = 0;
     projectile.moveListener = createjs.Ticker.on("tick", moveProjectile, null, false, {proj: projectile});
     projectile.collisionListener = createjs.Ticker.on("tick", collisionCheck, null, false, {proj: projectile});
-
   }
 }
 
@@ -136,7 +135,7 @@ function collisionCheck(event, data) {
       if (intersection) {
         event.stageX = klotterBlock[i].x;
         event.stageY = klotterBlock[i].y;
-        addScore(event, 25);
+        addScore(event, 20);
         klotterBlock[i].x = Math.random()*(stage.canvas.width-300) + 100;
         klotterBlock[i].y = Math.random()*100;
         if (i % 4 == 0) {
@@ -146,7 +145,7 @@ function collisionCheck(event, data) {
           stage.addChild(klotterBlock[klotterBlock.antalBlock]);
           klotterBlock.antalBlock += 1;
         } else if (i % 3 == 0) {
-          klotter.alpha -= 1;
+          klotter.alpha -= 1/10;
         }
         removeProjectile(data.proj);
       }
@@ -161,6 +160,11 @@ function visaSanering() {
   sanering.x = stage.canvas.width/2 - 250;
   sanering.y = stage.canvas.height*0.3;
   sanering.scaleX = sanering.scaleY = 0.75;
+  stage.removeChild(fortsatt);
+  stage.addChild(fortsatt);
+  fortsatt.on("click", endSanera);
+  fortsatt.x = stage.canvas.width/2 - 220;
+  fortsatt.y = 680;
   tooltipGraphics.removeAllEventListeners();
   tooltipGraphics.on("click", endSanera);
   var c1, c2, c3;
@@ -177,7 +181,7 @@ function visaSanering() {
   stage.addChild(c1);
   stage.addChild(c2);
   stage.addChild(c3);
-  fortsatt.on("click", endSanera);
+
 }
 
 var före = false

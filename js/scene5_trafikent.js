@@ -11,7 +11,7 @@ function loadTrafikent() {
   kaffemug.y = 560;
   stage.addChild(kaffemug);
   kaffemug.on("click", loadScoreScreen);
-  var kaffeTooltip = new createjs.Bitmap("bitmaps/coffee.png");
+  var kaffeTooltip = new createjs.Bitmap("bitmaps/tarast.png");
   kaffeTooltip.x = kaffemug.x + 50;
   kaffeTooltip.y = kaffemug.y + 100;
   kaffeTooltip.scaleY = kaffeTooltip.scaleX = 2/5;

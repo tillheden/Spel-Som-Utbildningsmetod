@@ -8,7 +8,6 @@ function loadStartScreen() {
                   gradient.graphics.endFill();
   stage.addChild(gradient);
 
-
   t = new createjs.Text("Fyll i ditt namn:", "30px Arial", "#FFF");
   stage.addChild(t);
   t.x = stage.canvas.width/2;
@@ -29,7 +28,8 @@ function loadStartScreen() {
   fort.x = stage.canvas.width/2 - 110;
   fort.y = stage.canvas.height * 0.4;
 
-  /*start();*/
+  input.value = "ost";
+  start();
 }
 
 function updateStartScreen() {
@@ -43,9 +43,10 @@ function start() {
     createjs.Ticker.off("tick", updateListener);
     stage.removeAllChildren();
     document.body.removeChild(input);
-    loadCharacterSelection();
+    /*loadCharacterSelection();*/
+    /*loadJudge();*/
+    loadMeeting();
   } else {
     t.color = "red";
   }
-  /*loadScoreScreen();*/
 }

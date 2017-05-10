@@ -35,6 +35,7 @@ function resizeCanvas() {
 function addScore(event, s) {
   if (s >= 0) var animatedText = new createjs.Text("+"+s, "50px Bold Arial", "#0F0");
   else var animatedText = new createjs.Text(s, "50px Bold Arial", "#F00");
+  animatedText.shadow = new createjs.Shadow("#000", 1, 1, 2);
   animatedText.x = event.stageX;
   animatedText.y = event.stageY;
   animatedText.speed = -10;
