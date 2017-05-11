@@ -23,11 +23,7 @@ function loadScoreScreen() {
   scoreText.y = scoreScreenText.y + 115;
   scoreText.font = "bold 40px Arial";
 
-  var f = new createjs.Text("Starta Om", "Bold 60px Arial", "#FFF");
-  stage.addChild(f);
-  f.on("click", nyttSpel);
-  f.x = 100;
-  f.y = 400;
+
 
   addHighscore();
   displayScoreboard();
@@ -77,6 +73,11 @@ function displayScoreboard() {
       var patIndex = k.lastIndexOf(pattern)+pattern.length;
       scoreboardText = ("<li>"+k.substring(patIndex, k.length) +" "+ childSnapshot.val() + "</li>") + scoreboardText;
       scoreboard.innerHTML = "High-Scores<ol>"+scoreboardText+"</ol>";
+      var f = new createjs.Text("Starta Om", "Bold 60px Arial", "#FFF");
+      stage.addChild(f);
+      f.on("click", nyttSpel);
+      f.x = 100;
+      f.y = 400;
     });
   });
 }

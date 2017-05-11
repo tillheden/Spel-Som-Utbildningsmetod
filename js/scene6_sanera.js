@@ -32,7 +32,7 @@ function loadSanera() {
 
     var saneringsinfo = new createjs.Bitmap("bitmaps/saneringinfo.png");
     stage.addChild(saneringsinfo);
-    saneringsinfo.x = 175;
+    saneringsinfo.x = 250;
     saneringsinfo.y = 50;
     saneringsinfo.on("click", tabortRuta, null, true);
 
