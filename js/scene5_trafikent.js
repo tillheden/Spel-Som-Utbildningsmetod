@@ -18,7 +18,7 @@ function loadTrafikent() {
   kaffeTooltip.on("click", scoreScreen);
   stage.addChild(kaffeTooltip);
 
-  notifikation = new createjs.Bitmap("bitmaps/notification.png");
+  notifikation = new createjs.Bitmap(klotter.notifikation);
   notifikation.x = 930;
   notifikation.y = 275;
 
@@ -50,52 +50,58 @@ function not(event) {
   if (q == 0) {
     stage.addChild(notifikation);
     createjs.Ticker.off("tick", notListener);
-    mobilTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
-    mobilTooltip.x = mobil.x + 70;
-    mobilTooltip.y = mobil.y + 20;
-    mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
-    mobilTooltip.on("click", endTrafikent);
-    stage.addChild(mobilTooltip);
 
-    mobil.on("click", endTrafikent);
-    stotText = new createjs.Bitmap("bitmaps/isitstötande.png");
-    stotText.x = mobil.x;
-    stotText.y = dator.y - 150;
-    stotText.scaleX = stotText.scaleY = 0.75;
-    stage.addChild(stotText);
-
-    stotande = new createjs.Bitmap("bitmaps/ja.png");
-    stage.addChild(stotande);
-    stotande.x = dator.x+20;
-    stotande.y = dator.y;
-    stotande.on("click", stot);
-
-    inteStotande = new createjs.Bitmap("bitmaps/nej.png");
-    stage.addChild(inteStotande);
-    inteStotande.x = dator.x+100;
-    inteStotande.y = dator.y;
-    inteStotande.on("click", stot);
+    var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
+    stage.addChild(skadeRuta);
+    skadeRuta.x = dator.x;
+    skadeRuta.y = dator.y-40;
+    skadeRuta.on("click", visaStot, null, true);
     /*endTrafikent();*/
   }
   else
     q -= 1;
 }
 
+function visaStot(event) {
+  tabortRuta(event);
+  stotText = new createjs.Bitmap("bitmaps/isitstötande.png");
+  stotText.x = stage.canvas.width/5-100;
+  stotText.y = dator.y - 150;
+  stotText.scaleX = stotText.scaleY = 0.75;
+  stage.addChild(stotText);
+
+  stotande = new createjs.Bitmap("bitmaps/ja.png");
+  stage.addChild(stotande);
+  stotande.x = stotText.x+400;
+  stotande.y = stotText.y+150;
+  stotande.on("click", stot);
+
+  inteStotande = new createjs.Bitmap("bitmaps/nej.png");
+  stage.addChild(inteStotande);
+  inteStotande.x = stotText.x+400 ;
+  inteStotande.y = stotText.y+300;
+  inteStotande.on("click", stot);
+}
+
 function stot(event) {
+  mobilTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
+  mobilTooltip.x = mobil.x + 70;
+  mobilTooltip.y = mobil.y + 20;
+  mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
+  mobilTooltip.on("click", endTrafikent);
+  stage.addChild(mobilTooltip);
+  mobil.on("click", endTrafikent);
+
   if ((klotter.stotande == true && event.target == stotande) || (klotter.stotande == false && event.target == inteStotande))
     addScore(event, 150);
   else {
-    var j = new createjs.Bitmap("bitmaps/isnotstötande.png");
-    j.on("click", tabortRuta, null, true);
-    j.x = stotText.x;
-    j.y = stotText.y;
-    stage.addChild()
     addScore(event, -100);
   }
 
   stage.removeChild(stotande);
   stage.removeChild(inteStotande);
   stage.removeChild(stotText);
+
 }
 
 function tabortRuta(event) {

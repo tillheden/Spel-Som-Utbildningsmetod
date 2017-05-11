@@ -23,7 +23,7 @@ function loadScoreScreen() {
   scoreText.y = scoreScreenText.y + 115;
   scoreText.font = "bold 40px Arial";
 
-  var f = new createjs.Bitmap("bitmaps/fortsätt.png");
+  var f = new createjs.Text("Starta Om", "Bold 60px Arial", "#FFF");
   stage.addChild(f);
   f.on("click", nyttSpel);
   f.x = 100;

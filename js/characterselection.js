@@ -32,8 +32,9 @@ function loadCharacterSelection() {
     klotter = new createjs.Bitmap("bitmaps/graffiti.png");
     klotter.stotande = false;
     klotter.splat = "bitmaps/purplesplat.png";
-    klotter.notifikation = "bitmaps/notifikation.png";
+    klotter.notifikation = "bitmaps/notification.png";
     klotter.bevis = "bitmaps/bevis.png";
+    klotter.skade = "bitmaps/skadedb.png";
     stage.addChild(vandal);
 
     var vandal2Sheet = new createjs.SpriteSheet({
@@ -70,6 +71,7 @@ function endCharacterSelection() {
   createjs.Ticker.off("tick", updateListener);
   stage.removeAllChildren();
   loadGraffiti();
+  /*loadJudge();*/
 }
 
 function v2() {
@@ -81,6 +83,7 @@ function v2() {
   klotter.splat = "bitmaps/redsplat.png";
   klotter.notifikation = "bitmaps/notification2.png";
   klotter.bevis = "bitmaps/bevis2.png";
+  klotter.skade = "bitmaps/skadedb2.png";
   vandal.removeAllEventListeners();
   endCharacterSelection();
 }

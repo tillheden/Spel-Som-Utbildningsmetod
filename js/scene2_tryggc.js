@@ -41,7 +41,7 @@ function loadTryggC() {
     csgTooltip = new createjs.Bitmap("bitmaps/kontaktacsg.png");
     csgTooltip.x = headset.x+400;
     csgTooltip.y = headset.y+250;
-    csgTooltip.scaleY = csgTooltip.scaleX = 2/5;
+    csgTooltip.scaleY = csgTooltip.scaleX = 3/5;
     csgTooltip.on("click", endTryggC);
     stage.addChild(csgTooltip);
 

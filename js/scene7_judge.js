@@ -5,27 +5,33 @@ function loadJudge() {
   var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
   stage.addChild(skadereglerare);
 
-  ruta = new createjs.Bitmap("bitmaps/ruta.png");
-  stage.addChild(ruta);
-  ruta.scaleY = ruta.scaleX = 3;
-  ruta.x = 585;
-  ruta.y = 340;
-
-  pass = new createjs.Bitmap("bitmaps/checkmark.png");
-  stage.addChild(pass);
-  pass.x = 700;
-  pass.y = 400;
-  pass.on("click", passF, null, true);
-
-  fail = new createjs.Bitmap("bitmaps/cross.png");
-  stage.addChild(fail);
-  fail.x = 600;
-  fail.y = 400;
-  fail.on("click", failF, null, true);
+  var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
+  stage.addChild(skadeRuta);
+  skadeRuta.x = 680;
+  skadeRuta.y = 170;
+  skadeRuta.on("click", klarmarkera, null, true);
 
   placeScore();
   textTooltip.text = "Skadereglerare";
   /*endJudge();*/
+}
+
+function klarmarkera(event) {
+  tabortRuta(event);
+  ruta = new createjs.Bitmap(klotter.skade);
+  stage.addChild(ruta);
+
+  pass = new createjs.Bitmap("bitmaps/ja.png");
+  stage.addChild(pass);
+  pass.x = 750;
+  pass.y = 550;
+  pass.on("click", passF, null, true);
+
+  fail = new createjs.Bitmap("bitmaps/nej.png");
+  stage.addChild(fail);
+  fail.x = 925;
+  fail.y = 550;
+  fail.on("click", failF, null, true);
 }
 
 function updateJudge() {
@@ -48,13 +54,25 @@ function failF(event) {
   meet();
 }
 
+var tt = 100;
+var meetList;
 function meet() {
-  stage.removeChild(pass);
-  stage.removeChild(fail);
-  stage.removeChild(ruta);
-  ruta = new createjs.Bitmap("bitmaps/tooltip.png");
-  stage.addChild(ruta);
-  ruta.x = fail.x;
-  ruta.y = fail.y;
-  ruta.on("click", endJudge);
+  if (tt==100) {
+    meetList = createjs.Ticker.on("tick", meet);
+    stage.removeChild(pass);
+    stage.removeChild(fail);
+    stage.removeChild(ruta);
+    tt -= 1;
+  }
+  else if (tt > 0) {
+    tt -= 1;
+  }
+  else if (tt == 0) {
+    createjs.Ticker.off("tick", meetList);
+    ruta = new createjs.Bitmap("bitmaps/möteinfo.png");
+    stage.addChild(ruta);
+    ruta.x = 150;
+    ruta.y = 50;
+    ruta.on("click", endJudge);
+  }
 }

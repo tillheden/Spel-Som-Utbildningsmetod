@@ -30,6 +30,12 @@ function loadSanera() {
     taBild.scaleY = taBild.scaleX = 2/5;
     taBild.listener = taBild.on("click", taFörebild);
 
+    var saneringsinfo = new createjs.Bitmap("bitmaps/saneringinfo.png");
+    stage.addChild(saneringsinfo);
+    saneringsinfo.x = 175;
+    saneringsinfo.y = 50;
+    saneringsinfo.on("click", tabortRuta, null, true);
+
     placeScore();
     textTooltip.text = "Sanerare";
     /*endSanera();*/
@@ -56,7 +62,7 @@ function startaSanering(event) {
   klotterBlock.antalBlock = 0;
   for (var i = 0; i < 5; i++) {
     klotterBlock[i] = new createjs.Bitmap(klotter.splat);
-    klotterBlock[i].x = Math.random()*(stage.canvas.width-200) + 200;
+    klotterBlock[i].x = Math.random()*(stage.canvas.width-300) + 100;
     klotterBlock[i].y = Math.random()*100;
     stage.addChild(klotterBlock[i]);
     klotterBlock.antalBlock += 1;

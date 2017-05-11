@@ -38,7 +38,7 @@ function addScore(event, s) {
   animatedText.shadow = new createjs.Shadow("#000", 1, 1, 2);
   animatedText.x = event.stageX;
   animatedText.y = event.stageY;
-  animatedText.speed = -10;
+  animatedText.speed = -5;
   animatedText.on("tick", textAnimtion);
   stage.addChild(animatedText);
   score += s;
@@ -47,7 +47,7 @@ function addScore(event, s) {
 
 function textAnimtion() {
    this.y += this.speed;
-   this.speed += 0.75;
+   this.speed += 0.2;
    if (this.y > stage.canvas.height-30) {
      stage.removeChild(this);
    }
