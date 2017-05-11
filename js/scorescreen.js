@@ -19,7 +19,7 @@ function loadScoreScreen() {
   var scoreScreenText = new createjs.Bitmap("bitmaps/finalscore.png");
   stage.addChild(scoreScreenText);
   stage.addChild(scoreText);
-  scoreText.x = scoreScreenText.x + 250;
+  scoreText.x = scoreScreenText.x + 210;
   scoreText.y = scoreScreenText.y + 115;
   scoreText.font = "bold 40px Arial";
 
@@ -29,7 +29,7 @@ function loadScoreScreen() {
   f.x = 100;
   f.y = 400;
 
-  addHighscore()
+  addHighscore();
   displayScoreboard();
 }
 
@@ -49,7 +49,7 @@ function addHighscore() {
       db.ref("amountOfEntries").set(playername.n);
 
       var q = playername.n +":||:"+ playername.name;
-      db.ref("scoreboard/"+q).set(Math.floor(Math.random()*1000));
+      db.ref("scoreboard/"+q).set(score);
     });
   }
 }

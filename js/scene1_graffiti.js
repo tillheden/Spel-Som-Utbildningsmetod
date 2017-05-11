@@ -2,7 +2,7 @@ var klotterListener, stationListener, updateListener, station, spraypaintsound, 
 
 function loadGraffiti() {
     updateListener = createjs.Ticker.on("tick", updateGraffiti);
-    spraypaintsound = new Audio("sounds/spraypaint.mp3");
+    /*spraypaintsound = new Audio("sounds/spraypaint.mp3");*/
 
     station = new createjs.Bitmap("bitmaps/station.png");
     stationListener = station.on("click", placeraGraffiti);
@@ -45,11 +45,10 @@ function endGraffiti(event) {
 
 var sprayburk, paneraListener
 function placeraGraffiti(event) {
-    spraypaintsound.play();
     klotter.originalX = klotter.x = event.stageX - (254 / 2);
     klotter.originalY = klotter.y = event.stageY - (320 / 2);
     stage.addChild(klotter);
-    sprayburk = new createjs.Bitmap("bitmaps/bevis.png");
+    sprayburk = new createjs.Bitmap(klotter.bevis);
     sprayburk.x = klotter.x;
     sprayburk.y = 600;
     stage.addChild(sprayburk);

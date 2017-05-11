@@ -63,10 +63,10 @@ function endTryggC(event) {
 function displaydator(event) {
     stage.removeChild(datorTooltip);
     dator.off("click", datorListener);
-    avtal = new createjs.Bitmap("bitmaps/sanering.png");
+    avtal = new createjs.Bitmap("bitmaps/avtalinfo.png");
     stage.addChild(avtal);
-    avtal.x = dator.x;
-    avtal.y = dator.y;
+    avtal.x = 170;
+    avtal.y = 0;
     avtal.on("click", removeAvtal);
     addScore(event, 250);
 }

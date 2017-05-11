@@ -33,6 +33,7 @@ function loadCharacterSelection() {
     klotter.stotande = false;
     klotter.splat = "bitmaps/purplesplat.png";
     klotter.notifikation = "bitmaps/notifikation.png";
+    klotter.bevis = "bitmaps/bevis.png";
     stage.addChild(vandal);
 
     var vandal2Sheet = new createjs.SpriteSheet({
@@ -78,7 +79,8 @@ function v2() {
   klotter = new createjs.Bitmap("bitmaps/graffiti2.png");
   klotter.stotande = true;
   klotter.splat = "bitmaps/redsplat.png";
-  klotter.notifikation = "bitmaps/notifikation2.png";
+  klotter.notifikation = "bitmaps/notification2.png";
+  klotter.bevis = "bitmaps/bevis2.png";
   vandal.removeAllEventListeners();
   endCharacterSelection();
 }

@@ -46,8 +46,8 @@ function endCSG() {
 }
 
 function dokumentera(event) {
-  var kameraSound = new Audio("sounds/camera_shutter.mp3");
-  kameraSound.play();
+  /*var kameraSound = new Audio("sounds/camera_shutter.mp3");
+  kameraSound.play();*/
   addScore(event, 150);
   stage.removeChild(event.target);
 }

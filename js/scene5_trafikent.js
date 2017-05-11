@@ -58,23 +58,21 @@ function not(event) {
     stage.addChild(mobilTooltip);
 
     mobil.on("click", endTrafikent);
-    stotText = new createjs.Text("Är klottret stötande?", "50px Arial", "#FFF");
-    stotText.shadow = new createjs.Shadow("#000", 0, 0, 10);
-    stotText.x = dator.x;
+    stotText = new createjs.Bitmap("bitmaps/isitstötande.png");
+    stotText.x = mobil.x;
     stotText.y = dator.y - 150;
+    stotText.scaleX = stotText.scaleY = 0.75;
     stage.addChild(stotText);
 
-    stotande = new createjs.Text("Stötande", "50px Arial", "#FFF");
-    stotande.shadow = new createjs.Shadow("#000", 0, 0, 10);
+    stotande = new createjs.Bitmap("bitmaps/ja.png");
     stage.addChild(stotande);
-    stotande.x = dator.x;
-    stotande.y = dator.y-75;
+    stotande.x = dator.x+20;
+    stotande.y = dator.y;
     stotande.on("click", stot);
 
-    inteStotande = new createjs.Text("Inte Stötande", "50px Arial", "#FFF");
-    inteStotande.shadow = new createjs.Shadow("#000", 0, 0, 10);
+    inteStotande = new createjs.Bitmap("bitmaps/nej.png");
     stage.addChild(inteStotande);
-    inteStotande.x = dator.x;
+    inteStotande.x = dator.x+100;
     inteStotande.y = dator.y;
     inteStotande.on("click", stot);
     /*endTrafikent();*/
@@ -86,9 +84,20 @@ function not(event) {
 function stot(event) {
   if ((klotter.stotande == true && event.target == stotande) || (klotter.stotande == false && event.target == inteStotande))
     addScore(event, 150);
-  else
+  else {
+    var j = new createjs.Bitmap("bitmaps/isnotstötande.png");
+    j.on("click", tabortRuta, null, true);
+    j.x = stotText.x;
+    j.y = stotText.y;
+    stage.addChild()
     addScore(event, -100);
+  }
+
   stage.removeChild(stotande);
   stage.removeChild(inteStotande);
   stage.removeChild(stotText);
+}
+
+function tabortRuta(event) {
+  stage.removeChild(event.target);
 }

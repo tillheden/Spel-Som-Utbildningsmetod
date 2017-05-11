@@ -56,7 +56,7 @@ function loadChase() {
     tooltipGraphics.scaleY = tooltipGraphics.scaleX = 0.75;
 
     placeScore();
-    textTooltip.text = "CSG";
+    textTooltip.text = "Egendomsväktare";
 }
 
 function jaga(event) {
