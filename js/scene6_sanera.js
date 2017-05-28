@@ -77,8 +77,7 @@ function moveKlotterBlock(event) {
     if (klotterBlock[i].y > 740) {
       event.stageX = klotterBlock[i].x;
       event.stageY = klotterBlock[i].y-100;
-      addScore(event, -100);
-      if (klotter.alpha < 1) { klotter.alpha += 0.25; }
+      addScore(event, -20);
       klotterBlock[i].x = Math.random()*(stage.canvas.width-300) + 100;
       klotterBlock[i].y = Math.random()*100;
     }
@@ -151,7 +150,7 @@ function collisionCheck(event, data) {
           stage.addChild(klotterBlock[klotterBlock.antalBlock]);
           klotterBlock.antalBlock += 1;
         } else if (i % 3 == 0) {
-          klotter.alpha -= 1/10;
+          klotter.alpha -= 1/6;
         }
         removeProjectile(data.proj);
       }

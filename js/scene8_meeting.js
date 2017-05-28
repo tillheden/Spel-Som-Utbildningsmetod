@@ -90,6 +90,9 @@ function bossbotAnimation() {
     stage.removeChild(bg);
     bg = new createjs.Bitmap("bitmaps/meetingbg.png");
     stage.addChild(bg);
+    var hej = new createjs.Bitmap("bitmaps/besegra.png");
+    stage.addChild(hej);
+    hej.x = 250;
     stage.setChildIndex(bossbot, stage.getNumChildren()-1);
     bossbot.scaleY = bossbot.scaleX = 0.7;
     bossbot.y = 60;
@@ -106,6 +109,7 @@ function bossbotAnimation() {
     ammoText.x = ammoPic.x + 100;
     stage.on("click", kastaPapper);
     limit = Math.random()*stage.canvas.width+500;
+
     placeScore();
   }
 }

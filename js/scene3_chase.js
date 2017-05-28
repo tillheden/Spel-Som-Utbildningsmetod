@@ -61,7 +61,7 @@ function loadChase() {
 
 function jaga(event) {
     if (csg.currentAnimation === "csg_idle") csg.gotoAndPlay("csg_run");
-    csg.speed += 3;
+    csg.speed += 2.5;
     /*csg.speed += 30.4;*/
     stage.removeChild(tooltipGraphics);
 }
