@@ -1,15 +1,27 @@
 var ruta, pass, fail
 function loadJudge() {
-  updateListener = createjs.Ticker.on("tick", updateJudge);
+    updateListener = createjs.Ticker.on("tick", updateJudge);
 
-  var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
-  stage.addChild(skadereglerare);
+    var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
+    stage.addChild(skadereglerare);
 
-  var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
-  stage.addChild(skadeRuta);
-  skadeRuta.x = 680;
-  skadeRuta.y = 170;
-  skadeRuta.on("click", klarmarkera, null, true);
+    var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
+    stage.addChild(skadeRuta);
+    skadeRuta.x = 680;
+    skadeRuta.y = 170;
+    skadeRuta.on("click", klarmarkera, null, true);
+
+    var kaffemug = new createjs.Bitmap("bitmaps/coffee.png");
+    kaffemug.x = 1060;
+    kaffemug.y = 560;
+    stage.addChild(kaffemug);
+    kaffemug.on("click", loadScoreScreen);
+    var kaffeTooltip = new createjs.Bitmap("bitmaps/tarast.png");
+    kaffeTooltip.x = kaffemug.x + 50;
+    kaffeTooltip.y = kaffemug.y + 100;
+    kaffeTooltip.scaleY = kaffeTooltip.scaleX = 2/5;
+    kaffeTooltip.on("click", scoreScreen);
+    stage.addChild(kaffeTooltip);
 
   placeScore();
   textTooltip.text = "Skadereglerare";

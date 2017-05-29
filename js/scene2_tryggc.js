@@ -1,4 +1,4 @@
-var dator, datorListener, datorTooltip, saneraTooltip, avtal
+var dator, datorListener, datorTooltip, saneraTooltip, avtal, headset;
 function loadTryggC() {
     updateListener = createjs.Ticker.on("tick", updateTryggC);
     var tryggcBg = new createjs.Bitmap("bitmaps/tryggc.png");
@@ -28,7 +28,7 @@ function loadTryggC() {
     kaffeTooltip.on("click", scoreScreen);
     stage.addChild(kaffeTooltip);
 
-    var headset = new createjs.Bitmap("bitmaps/headset.png");
+    headset = new createjs.Bitmap("bitmaps/headset.png");
     headset.x = 60;
     headset.y = 150;
     stage.addChild(headset);
@@ -38,7 +38,7 @@ function loadTryggC() {
     saneraTooltip.scaleY = saneraTooltip.scaleX = 2/5;
     saneraTooltip.on("click", felVal);
     stage.addChild(saneraTooltip);
-    csgTooltip = new createjs.Bitmap("bitmaps/kontaktacsg.png");
+    var csgTooltip = new createjs.Bitmap("bitmaps/kontaktacsg.png");
     csgTooltip.x = headset.x+400;
     csgTooltip.y = headset.y+250;
     csgTooltip.scaleY = csgTooltip.scaleX = 3/5;
@@ -78,4 +78,12 @@ function removeAvtal() {
 function felVal(event) {
   addScore(event, -200);
   stage.removeChild(saneraTooltip);
+  saneraTooltip = new createjs.Bitmap("bitmaps/tryggc_felval.png");
+    saneraTooltip.x = headset.x+400;
+    saneraTooltip.y = headset.y+150;
+    saneraTooltip.scaleY = saneraTooltip.scaleX = 2/5;
+    saneraTooltip.on("click", function (event) {
+        stage.removeChild(saneraTooltip);
+    });
+    stage.addChild(saneraTooltip);
 }

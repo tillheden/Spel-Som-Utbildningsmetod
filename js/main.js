@@ -19,6 +19,7 @@ function loadGame() {
     window.addEventListener("resize", resizeCanvas);
     window.scrollTo(0, 1);
     createjs.Touch.enable(stage);
+
     loadStartScreen();
 }
 

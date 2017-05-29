@@ -73,7 +73,7 @@ function startaSanering(event) {
 
 function moveKlotterBlock(event) {
   for (var i = 0; i < klotterBlock.antalBlock; i++) {
-    klotterBlock[i].y += 1.5;
+    klotterBlock[i].y += 2.1;
     if (klotterBlock[i].y > 740) {
       event.stageX = klotterBlock[i].x;
       event.stageY = klotterBlock[i].y-100;
@@ -121,7 +121,7 @@ function skjutSanering(event) {
 function moveProjectile(event, data) {
   data.proj.x = data.proj.originalX + data.proj.distanceTraveled*Math.cos(data.proj.angle);
   data.proj.y = data.proj.originalY - data.proj.distanceTraveled*Math.sin(data.proj.angle);
-  data.proj.distanceTraveled += 10;
+  data.proj.distanceTraveled += 15;
   if (data.proj.y < 0-64 || data.proj.x > 1334-64 || data.proj.x < 0-64) {
     removeProjectile(data.proj);
   }
@@ -140,7 +140,7 @@ function collisionCheck(event, data) {
       if (intersection) {
         event.stageX = klotterBlock[i].x;
         event.stageY = klotterBlock[i].y;
-        addScore(event, 20);
+        addScore(event, 25);
         klotterBlock[i].x = Math.random()*(stage.canvas.width-300) + 100;
         klotterBlock[i].y = Math.random()*100;
         if (i % 4 == 0) {
@@ -149,15 +149,15 @@ function collisionCheck(event, data) {
           klotterBlock[klotterBlock.antalBlock].y = Math.random()*100;
           stage.addChild(klotterBlock[klotterBlock.antalBlock]);
           klotterBlock.antalBlock += 1;
-        } else if (i % 3 == 0) {
-          klotter.alpha -= 1/6;
         }
+        klotter.alpha -= 1/30;
         removeProjectile(data.proj);
       }
     }
   }
 }
 
+var meter;
 function visaSanering() {
   var sanering = new createjs.Bitmap("bitmaps/sanering.png");
   stage.removeChild(taBild);

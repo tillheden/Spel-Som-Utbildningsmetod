@@ -84,7 +84,7 @@ function visaStot(event) {
 }
 
 function stot(event) {
-  mobilTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
+  var mobilTooltip = new createjs.Bitmap("bitmaps/kontaktasanerare.png");
   mobilTooltip.x = mobil.x + 70;
   mobilTooltip.y = mobil.y + 20;
   mobilTooltip.scaleY = mobilTooltip.scaleX = 2/5;
@@ -92,9 +92,17 @@ function stot(event) {
   stage.addChild(mobilTooltip);
   mobil.on("click", endTrafikent);
 
-  if ((klotter.stotande == true && event.target == stotande) || (klotter.stotande == false && event.target == inteStotande))
-    addScore(event, 150);
+  if ((klotter.stotande == true && event.target == stotande) || (klotter.stotande == false && event.target == inteStotande)){
+      addScore(event, 150);
+  }
   else {
+    var feedbackbild = new createjs.Bitmap("bitmaps/stotande_felval.png");
+    feedbackbild.x = stage.canvas.width/5-100;
+    feedbackbild.y = dator.y - 150;
+    feedbackbild.on("click", function (e) {
+       stage.removeChild(e.target);
+    });
+    stage.addChild(feedbackbild);
     addScore(event, -100);
   }
 
