@@ -28,7 +28,7 @@ function loadSanera() {
     taBild.y = klotter.y;
     taBild.x = klotter.x-200;
     taBild.scaleY = taBild.scaleX = 2/5;
-    taBild.listener = taBild.on("click", taFörebild);
+    taBild.listener = taBild.on("click", taForeBild);
 
     var saneringsinfo = new createjs.Bitmap("bitmaps/saneringinfo.png");
     stage.addChild(saneringsinfo);
@@ -97,7 +97,7 @@ function skjutSanering(event) {
     klotterBlock = null;
     stage.addChild(taBild);
     taBild.on("click", taEfterbild);
-    fortsatt = new createjs.Bitmap("bitmaps/fortsätt.png");
+    fortsatt = new createjs.Bitmap("bitmaps/fortsatt.png");
     stage.addChild(fortsatt);
     fortsatt.on("click", visaSanering);
     fortsatt.y = 50;
@@ -173,7 +173,7 @@ function visaSanering() {
   tooltipGraphics.removeAllEventListeners();
   tooltipGraphics.on("click", endSanera);
   var c1, c2, c3;
-  if (före == true) c1 = new createjs.Bitmap("bitmaps/checkmark.png");
+  if (fore == true) c1 = new createjs.Bitmap("bitmaps/checkmark.png");
   else c1 = new createjs.Bitmap("bitmaps/cross.png");
   c2 = new createjs.Bitmap("bitmaps/checkmark.png");
   if (efter == true) c3 = new createjs.Bitmap("bitmaps/checkmark.png");
@@ -189,13 +189,13 @@ function visaSanering() {
 
 }
 
-var före = false
-function taFörebild(event) {
-  före = true;
+var fore = false;
+function taForeBild(event) {
+  fore = true;
   dokumentera(event);
 }
 
-var efter = false
+var efter = false;
 function taEfterbild(event) {
   efter = true;
   dokumentera(event);

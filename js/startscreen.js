@@ -22,7 +22,7 @@ function loadStartScreen() {
   input.style.left = "42.5%";
   document.body.appendChild(input);
 
-  fort = new createjs.Bitmap("bitmaps/fortsätt.png");
+  fort = new createjs.Bitmap("bitmaps/fortsatt.png");
   stage.addChild(fort);
   fort.on("click", start);
   fort.x = stage.canvas.width/2 - 110;
@@ -31,6 +31,7 @@ function loadStartScreen() {
   // input.value = "ost";
   // start();
 }
+
 
 function updateStartScreen() {
   stage.update();

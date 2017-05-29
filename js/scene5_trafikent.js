@@ -51,7 +51,7 @@ function not(event) {
     stage.addChild(notifikation);
     createjs.Ticker.off("tick", notListener);
 
-    var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
+    var skadeRuta = new createjs.Bitmap("bitmaps/kollaarende.png");
     stage.addChild(skadeRuta);
     skadeRuta.x = dator.x;
     skadeRuta.y = dator.y-40;
@@ -64,7 +64,7 @@ function not(event) {
 
 function visaStot(event) {
   tabortRuta(event);
-  stotText = new createjs.Bitmap("bitmaps/isitstötande.png");
+  stotText = new createjs.Bitmap("bitmaps/isitstotande.png");
   stotText.x = stage.canvas.width/5-100;
   stotText.y = dator.y - 150;
   stotText.scaleX = stotText.scaleY = 0.75;

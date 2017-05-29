@@ -5,7 +5,7 @@ function loadJudge() {
     var skadereglerare = new createjs.Bitmap("bitmaps/reglerarebg.png");
     stage.addChild(skadereglerare);
 
-    var skadeRuta = new createjs.Bitmap("bitmaps/kollaärende.png");
+    var skadeRuta = new createjs.Bitmap("bitmaps/kollaarende.png");
     stage.addChild(skadeRuta);
     skadeRuta.x = 680;
     skadeRuta.y = 170;
@@ -81,7 +81,7 @@ function meet() {
   }
   else if (tt == 0) {
     createjs.Ticker.off("tick", meetList);
-    ruta = new createjs.Bitmap("bitmaps/möteinfo.png");
+    ruta = new createjs.Bitmap("bitmaps/moteinfo.png");
     stage.addChild(ruta);
     ruta.x = 150;
     ruta.y = 50;
