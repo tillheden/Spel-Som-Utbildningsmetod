@@ -28,8 +28,8 @@ function loadStartScreen() {
   fort.x = stage.canvas.width/2 - 110;
   fort.y = stage.canvas.height * 0.4;
 
-  // input.value = "ost";
-  // start();
+  input.value = "ost";
+  start();
 }
 
 
@@ -44,9 +44,9 @@ function start() {
     createjs.Ticker.off("tick", updateListener);
     stage.removeAllChildren();
     document.body.removeChild(input);
-    loadCharacterSelection();
+    // loadCharacterSelection();
     // loadJudge();
-    // loadMeeting();
+    loadMeeting();
   } else {
     t.color = "red";
   }

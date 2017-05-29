@@ -17,25 +17,32 @@ function loadMeeting() {
 
   meetingText = new createjs.Bitmap("bitmaps/meetingtext.png");
   stage.addChild(meetingText);
-  meetingText.y = 450;
-  meetingText.x = 50;
+  meetingText.y = 490;
+  meetingText.x = 250;
+  meetingText.scaleX = meetingText.scaleY = 3/5;
 
   begPlan = new createjs.Bitmap("bitmaps/beg_plan.png");
-  begPlan.x = stage.canvas.width*0.65;
-  begPlan.y = 570;
+  begPlan.x = stage.canvas.width*0.55;
+  begPlan.y = 600;
+  begPlan.scaleY = begPlan.scaleX = 2/5;
   stage.addChild(begPlan);
   begPlan.on("click", function (ev) {
       planValText = new createjs.Bitmap("bitmaps/plan_val_text.png");
-      planValText.x = stage.canvas.width*0.30;
+      planValText.x = stage.canvas.width*0.35;
       planValText.y = 300;
+      planValText.scaleY = planValText.scaleX = 2/5;
+      planValText.on("click", function (e) {
+          stage.removeChild(e.target);
+      });
       stage.addChild(planValText);
       stage.removeChild(ev.target);
   });
 
   begVite = new createjs.Bitmap("bitmaps/beg_vite.png");
-  begVite.x = stage.canvas.width*0.13;
-  begVite.y = 570;
+  begVite.x = stage.canvas.width*0.25;
+  begVite.y = 600;
   stage.addChild(begVite);
+  begVite.scaleX = begVite.scaleY = 2/5;
   begVite.on("click", function (event) {
       stage.removeChild(event.target);
       stage.removeChild(begPlan);
@@ -119,7 +126,7 @@ function bossbotAnimation() {
 
     slRobot = new createjs.Bitmap("bitmaps/sl_robot.png");
     slRobot.x = stage.canvas.width*0.35;
-    slRobot.y = 555;
+    slRobot.y = 650;
     stage.addChild(slRobot);
     slRobot.gotMoney = false;
     slRobot.canShoot = true;
@@ -155,7 +162,7 @@ function bossbotAnimation() {
         slRobot.speed = 0;
     });
 
-    var goLeft = new createjs.Bitmap("bitmaps/go_right.png");
+    var goLeft = new createjs.Bitmap("bitmaps/go_left.png");
     goLeft.x = 30;
     goLeft.y = stage.canvas.height * 0.7;
     stage.addChild(goLeft);
