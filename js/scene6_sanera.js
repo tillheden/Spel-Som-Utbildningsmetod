@@ -52,11 +52,14 @@ function endSanera(event) {
 }
 
 var klotterBlock = {};
+var progressBar;
 function startaSanering(event) {
   taBild.off("click", taBild.listener);
   stage.removeChild(taBild);
   stage.removeChild(sanera);
   klotter.removeAllEventListeners();
+  sanerare = new createjs.Bitmap("bitmaps/sanerare_bak.png");
+  sanerare.scaleX = sanerare.scaleY = 0.8;
   sanerare.y = 600;
   sanerare.x = stage.canvas.width / 2;
   klotterBlock.antalBlock = 0;
@@ -69,6 +72,10 @@ function startaSanering(event) {
   }
   klotterBlock.moveListener = createjs.Ticker.on("tick", moveKlotterBlock);
   skjutSaneringListener = stage.on("click", skjutSanering);
+
+  progressBar = new createjs.Shape();
+  progressBar.graphics.beginFill("#00ADEF").drawRect(0,stage.canvas.height-20,stage.canvas.width, 20);
+  stage.addChild(progressBar);
 }
 
 function moveKlotterBlock(event) {
@@ -152,6 +159,7 @@ function collisionCheck(event, data) {
         }
         klotter.alpha -= 1/30;
         removeProjectile(data.proj);
+        progressBar.graphics.beginFill("#FFF").drawRoundRect(-5,stage.canvas.height-15, stage.canvas.width*(1-klotter.alpha), 12, 15);
       }
     }
   }
@@ -173,10 +181,10 @@ function visaSanering() {
   tooltipGraphics.removeAllEventListeners();
   tooltipGraphics.on("click", endSanera);
   var c1, c2, c3;
-  if (fore == true) c1 = new createjs.Bitmap("bitmaps/checkmark.png");
+  if (fore === true) c1 = new createjs.Bitmap("bitmaps/checkmark.png");
   else c1 = new createjs.Bitmap("bitmaps/cross.png");
   c2 = new createjs.Bitmap("bitmaps/checkmark.png");
-  if (efter == true) c3 = new createjs.Bitmap("bitmaps/checkmark.png");
+  if (efter === true) c3 = new createjs.Bitmap("bitmaps/checkmark.png");
   else c3 = new createjs.Bitmap("bitmaps/cross.png");
   c1.scaleY = c1.scaleX = c2.scaleY = c2.scaleX = c3.scaleY = c3.scaleX = 0.60;
   c1.x = c2.x = c3.x = sanering.x + 422;

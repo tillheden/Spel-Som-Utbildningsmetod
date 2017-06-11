@@ -176,7 +176,7 @@ function bossbotAnimation() {
       });
 
     var robotShoot = new createjs.Bitmap("bitmaps/robot_shoot.png");
-    robotShoot.x = 30;
+    robotShoot.x = stage.canvas.width/2 - 65;
     robotShoot.y = stage.canvas.height *0.83;
     stage.addChild(robotShoot);
     robotShoot.on("click", function (e) {
@@ -186,9 +186,16 @@ function bossbotAnimation() {
         }
     });
 
-    timerDisplay = new createjs.Text("Tid kvar: "+timer, "50px Bold Arial", "#ff7288");
-    timerDisplay.x = 30;
-    timerDisplay.y = stage.canvas.height * 0.20;
+
+    var timerbg = new createjs.Bitmap("bitmaps/timerbg.png");
+    timerbg.x = 8;
+    timerbg.y = stage.canvas.height * 0.15;
+    timerbg.scaleX = timerbg.scaleY = 0.25;
+    stage.addChild(timerbg);
+
+    timerDisplay = new createjs.Text(timer, "25px Arial", "#ffffff");
+    timerDisplay.x = 60;
+    timerDisplay.y = stage.canvas.height * 0.15;
     stage.addChild(timerDisplay);
     setTimeout(timerLogic, 1000);
 
@@ -197,7 +204,7 @@ function bossbotAnimation() {
 }
 
 function moveRobotArms(event) {
-    slRobot.armX = slRobot.x;
+    slRobot.armX = slRobot.x+285;
     robotArmOpen.x = robotArmClosed.x = slRobot.armX;
 
     slRobot.armY += slRobot.armSpeed;
@@ -225,6 +232,8 @@ function moveRobotArms(event) {
         var intersection2 = ndgmr.checkPixelCollision(bossbot, robotArmClosed, 0, true);
         if (intersection1 || intersection2) {
             if (slRobot.armSpeed < 0) {
+                event.stageX = slRobot.armX;
+                event.stageY = slRobot.armY;
                 addScore(event, -30);
                 slRobot.armSpeed *= -1;
             }
@@ -242,7 +251,7 @@ function moveRobotArms(event) {
 function timerLogic() {
     if (timer > 0) {
         timer -= 1;
-        timerDisplay.text = "Tid kvar: "+timer;
+        timerDisplay.text = timer;
         setTimeout(timerLogic, 1000);
     } else {
         endMeeting();

@@ -39,8 +39,10 @@ function endGraffiti(event) {
     stage.update();
 
     loadTryggC();
+
     /*scorescreen();*/
     /*loadMeeting();*/
+    // loadSanera();
 }
 
 var sprayburk, paneraListener
@@ -55,7 +57,7 @@ function placeraGraffiti(event) {
     stage.removeChild(tooltipGraphics);
     station.off("click", stationListener);
     paneraListener = createjs.Ticker.on("tick", paneraScenen);
-    /*endGraffiti();*/
+    // endGraffiti();
 }
 
 var s = 5;
